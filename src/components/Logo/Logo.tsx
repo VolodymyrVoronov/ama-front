@@ -19,7 +19,7 @@ const Logo = ({
     <div className={cn("mr-5 w-10 sm:w-12", wrapperClassName)}>
       <Image
         className={cn("px-1 py-1", className)}
-        radius="full"
+        radius="sm"
         shadow="md"
         removeWrapper
         alt={alt}
