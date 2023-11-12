@@ -1,8 +1,6 @@
 import { Image, ImageProps } from "@nextui-org/react";
 import cn from "classnames";
 
-import "@fontsource/gruppo";
-
 interface ILogoProps extends ImageProps {
   imgSrc?: string;
   alt?: string;
@@ -34,12 +32,7 @@ const Logo = ({
           {...props}
         />
       </div>
-      <p
-        className="font-bold text-xl"
-        style={{
-          fontFamily: "Gruppo",
-        }}
-      >
+      <p className="font-semibold text-xl">
         <span className="inline md:hidden">{logoTextShort}</span>
         <span className="hidden md:inline">{logoTextLong}</span>
       </p>

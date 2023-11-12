@@ -6,7 +6,9 @@ import { NextUIProvider } from "@nextui-org/react";
 import { Path } from "./constants/index.ts";
 
 import App from "./App.tsx";
+import Home from "./pages/Home/Home.tsx";
 
+import "@fontsource/gruppo";
 import "@fontsource/roboto";
 
 const router = createBrowserRouter([
@@ -17,7 +19,7 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <div>Home</div>,
+        element: <Home />,
       },
       {
         path: Path.QUESTIONS,

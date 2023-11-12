@@ -33,7 +33,12 @@ const NavBar = (): JSX.Element => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <Navbar onMenuOpenChange={setIsMenuOpen} isBordered>
+    <Navbar
+      onMenuOpenChange={setIsMenuOpen}
+      maxWidth="xl"
+      height="5rem"
+      isBordered
+    >
       <NavbarContent className="sm:hidden">
         <NavbarMenuToggle
           aria-label={isMenuOpen ? "Close menu" : "Open menu"}
@@ -58,6 +63,7 @@ const NavBar = (): JSX.Element => {
               to={item.link}
               size="lg"
               color={location.pathname === item.link ? "primary" : "foreground"}
+              className="font-bold text-xl"
             >
               {item.label}
             </Link>
@@ -67,12 +73,16 @@ const NavBar = (): JSX.Element => {
 
       <NavbarContent justify="end">
         <NavbarItem>
-          <Button color="primary" variant="shadow">
+          <Button
+            color="primary"
+            variant="shadow"
+            className="font-semibold text-lg"
+          >
             Login
           </Button>
         </NavbarItem>
         {/* <NavbarItem>
-          <Button color="primary" variant="shadow">
+          <Button color="danger" variant="bordered">
             Logout
           </Button>
         </NavbarItem> */}
@@ -89,6 +99,7 @@ const NavBar = (): JSX.Element => {
               to={item.link}
               size="lg"
               color={location.pathname === item.link ? "primary" : "foreground"}
+              className="font-bold text-xl"
             >
               {item.label}
             </Link>
