@@ -67,6 +67,7 @@ const QuestionForm = (): JSX.Element => {
           isMultiline
           isRequired
           onClick={onAreaFocus}
+          onFocus={onAreaFocus}
           name="question"
           value={question}
           onChange={onInputChange}
@@ -75,23 +76,28 @@ const QuestionForm = (): JSX.Element => {
           }}
         />
 
-        <AnimatePresence>
+        <AnimatePresence mode="wait">
           {showCover && (
             <motion.div
               className="mt-3 md:mt-5 flex gap-3 sm:gap-5 z-50 px-3 sm:px-5 md:px-10 py-3 md:py-5 bg-default-100 rounded-xl shadow-lg"
               initial={{
                 opacity: 0,
+                scale: 0.5,
               }}
               exit={{
                 opacity: 0,
+                scale: 0.5,
                 transition: {
                   duration: 0.5,
                 },
               }}
               animate={{
                 opacity: 1,
+                scale: 1,
                 transition: {
                   duration: 0.5,
+                  type: "spring",
+                  stiffness: 200,
                 },
               }}
             >

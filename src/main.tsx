@@ -9,7 +9,6 @@ import App from "./App.tsx";
 import Home from "./pages/Home/Home.tsx";
 
 import "@fontsource/gruppo";
-import "@fontsource/roboto";
 
 const router = createBrowserRouter([
   {
