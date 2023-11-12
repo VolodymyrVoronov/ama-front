@@ -7,6 +7,8 @@ import { Path } from "./constants/index.ts";
 
 import App from "./App.tsx";
 
+import "@fontsource/roboto";
+
 const router = createBrowserRouter([
   {
     path: Path.HOME,

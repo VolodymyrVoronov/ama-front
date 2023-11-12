@@ -44,14 +44,21 @@ const NavBar = (): JSX.Element => {
       <NavbarContent className="flex justify-center sm:justify-normal">
         <NavbarBrand>
           <Logo />
-          <p className="font-bold text-inherit">AMA</p>
         </NavbarBrand>
       </NavbarContent>
 
       <NavbarContent className="hidden sm:flex gap-4" justify="center">
         {menuItems.map((item) => (
-          <NavbarItem key={item.label}>
-            <Link as={RouterLink} to={item.link} size="lg" color="foreground">
+          <NavbarItem
+            key={item.label}
+            isActive={location.pathname === item.link}
+          >
+            <Link
+              as={RouterLink}
+              to={item.link}
+              size="lg"
+              color={location.pathname === item.link ? "primary" : "foreground"}
+            >
               {item.label}
             </Link>
           </NavbarItem>
@@ -73,7 +80,10 @@ const NavBar = (): JSX.Element => {
 
       <NavbarMenu className="bg-gray-50 border-1.5">
         {menuItems.map((item) => (
-          <NavbarMenuItem key={item.label}>
+          <NavbarMenuItem
+            key={item.label}
+            isActive={location.pathname === item.link}
+          >
             <Link
               as={RouterLink}
               to={item.link}
