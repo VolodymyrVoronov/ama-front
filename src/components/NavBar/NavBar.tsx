@@ -76,16 +76,20 @@ const NavBar = (): JSX.Element => {
           <Button
             color="primary"
             variant="shadow"
-            className="font-semibold text-lg"
+            className="font-semibold text-lg bg-gradient-to-tr from-cyan-500 to-blue-500"
           >
             Login
           </Button>
         </NavbarItem>
-        {/* <NavbarItem>
-          <Button color="danger" variant="bordered">
+        <NavbarItem>
+          <Button
+            color="danger"
+            variant="bordered"
+            className="font-semibold text-lg"
+          >
             Logout
           </Button>
-        </NavbarItem> */}
+        </NavbarItem>
       </NavbarContent>
 
       <NavbarMenu className="bg-gray-50 border-1.5">
