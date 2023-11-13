@@ -92,7 +92,7 @@ const NavBar = (): JSX.Element => {
         </NavbarItem>
       </NavbarContent>
 
-      <NavbarMenu className="bg-gray-50 border-1.5">
+      <NavbarMenu className="bg-gray-50 border-1.5 z-50">
         {menuItems.map((item) => (
           <NavbarMenuItem
             key={item.label}

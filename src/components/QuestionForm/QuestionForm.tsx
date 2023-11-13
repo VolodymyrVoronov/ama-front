@@ -1,35 +1,48 @@
 import { ChangeEvent, useState } from "react";
-import { Button, Tooltip, Textarea } from "@nextui-org/react";
+import { Button, Tooltip, Textarea, Input } from "@nextui-org/react";
 import { AnimatePresence, motion } from "framer-motion";
-import cn from "classnames";
+
+import { INewQuestion } from "../../types";
+
+const initialState = {
+  question: "",
+  email: "",
+};
 
 const QuestionForm = (): JSX.Element => {
   const [showCover, setShowCover] = useState(false);
-  const [question, setQuestion] = useState("");
+  const [questionData, setQuestionData] = useState<INewQuestion>(initialState);
 
   const onAreaFocus = (): void => {
     setShowCover(true);
   };
 
   const onInputChange = (e: ChangeEvent<HTMLInputElement>): void => {
-    setQuestion(e.target.value);
+    const { name, value } = e.target;
+
+    setQuestionData({
+      ...questionData,
+      [name]: value,
+    });
   };
 
   const onClearClick = (): void => {
-    setQuestion("");
+    setQuestionData(initialState);
   };
 
   const onSubmitClick = (): void => {
-    console.log(question);
-    setQuestion("");
+    console.log(questionData);
+
+    setQuestionData(initialState);
   };
 
   const onCloseClick = (): void => {
     setShowCover(false);
-    setQuestion("");
+    setQuestionData(initialState);
   };
 
-  const isQuestionEmpty = question === "";
+  const fieldsEmpty =
+    questionData?.question === "" || questionData?.email === "";
 
   return (
     <>
@@ -37,7 +50,8 @@ const QuestionForm = (): JSX.Element => {
         {showCover && (
           <motion.div
             onClick={onCloseClick}
-            className="absolute inset-0 z-40 bg-gradient-to-tr from-cyan-500 to-blue-500"
+            className="absolute inset-0 bg-gradient-to-tr from-cyan-500 to-blue-500"
+            style={{ zIndex: 40 }}
             initial={{
               opacity: 0,
             }}
@@ -45,6 +59,7 @@ const QuestionForm = (): JSX.Element => {
               opacity: 0,
               transition: {
                 duration: 0.5,
+                delay: 0.5,
               },
             }}
             animate={{
@@ -57,11 +72,9 @@ const QuestionForm = (): JSX.Element => {
         )}
       </AnimatePresence>
 
-      <div className="w-full p-4 md:p-8 rounded-xl flex flex-col justify-center items-center bg-gradient-to-tr from-cyan-500 to-blue-500 shadow-lg">
+      <div className="w-full p-2 sm:p-4 md:p-8 flex flex-col justify-center items-center bg-gradient-to-tr from-cyan-500 to-blue-500 shadow-lg rounded-xl">
         <Textarea
-          className={cn("w-full md:w-10/12 lg:w-8/12 xl:w-6/12 shadow-lg", {
-            "z-50": showCover,
-          })}
+          className="w-full md:w-10/12 lg:w-8/12 xl:w-6/12 z-40 shadow-lg"
           placeholder="Enter your question here..."
           size="lg"
           isMultiline
@@ -69,7 +82,7 @@ const QuestionForm = (): JSX.Element => {
           onClick={onAreaFocus}
           onFocus={onAreaFocus}
           name="question"
-          value={question}
+          value={questionData.question}
           onChange={onInputChange}
           classNames={{
             input: "text-xl md:text-2xl font-semibold",
@@ -78,70 +91,132 @@ const QuestionForm = (): JSX.Element => {
 
         <AnimatePresence mode="wait">
           {showCover && (
-            <motion.div
-              className="mt-3 md:mt-5 flex gap-3 sm:gap-5 z-50 px-3 sm:px-5 md:px-10 py-3 md:py-5 bg-default-100 rounded-xl shadow-lg"
-              initial={{
-                opacity: 0,
-                scale: 0.5,
-              }}
-              exit={{
-                opacity: 0,
-                scale: 0.5,
-                transition: {
-                  duration: 0.5,
-                },
-              }}
-              animate={{
-                opacity: 1,
-                scale: 1,
-                transition: {
-                  duration: 0.5,
-                  type: "spring",
-                  stiffness: 200,
-                },
-              }}
-            >
-              <Tooltip content="Close the form" color="primary" size="lg">
-                <Button
-                  radius="full"
-                  color="primary"
-                  variant="bordered"
-                  aria-label="Close"
-                  onClick={onCloseClick}
-                  className="font-semibold text-lg"
-                >
-                  Close
-                </Button>
-              </Tooltip>
+            <>
+              <motion.div
+                className="w-full md:w-10/12 lg:w-8/12 xl:w-6/12 mt-3 md:mt-5 z-40 shadow-lg"
+                initial={{
+                  opacity: 0,
+                  scale: 0.5,
+                }}
+                exit={{
+                  opacity: 0,
+                  scale: 0.5,
+                  transition: {
+                    duration: 0.5,
+                  },
+                }}
+                animate={{
+                  opacity: 1,
+                  scale: 1,
+                  transition: {
+                    duration: 0.5,
+                    delay: 0.5,
+                    type: "spring",
+                    stiffness: 200,
+                  },
+                }}
+              >
+                <Input
+                  placeholder="Enter your email here..."
+                  size="lg"
+                  isRequired
+                  name="email"
+                  type="email"
+                  value={questionData.email}
+                  onChange={onInputChange}
+                  classNames={{
+                    input: "text-xl md:text-2xl font-semibold",
+                  }}
+                />
+              </motion.div>
 
-              <Tooltip content="Clear the form" color="danger" size="lg">
-                <Button
-                  radius="full"
-                  color="danger"
-                  variant="shadow"
-                  aria-label="Clear"
-                  isDisabled={isQuestionEmpty}
-                  onClick={onClearClick}
-                  className="font-semibold text-lg"
+              <motion.div
+                className="w-full md:w-10/12 lg:w-8/12 xl:w-6/12 flex justify-center gap-3 sm:gap-5 z-50 mt-3 md:mt-5 px-3 py-3 bg-default-100 rounded-xl shadow-lg"
+                initial={{
+                  opacity: 0,
+                  scale: 0.5,
+                }}
+                exit={{
+                  opacity: 0,
+                  scale: 0.5,
+                  transition: {
+                    duration: 0.5,
+                  },
+                }}
+                animate={{
+                  opacity: 1,
+                  scale: 1,
+                  transition: {
+                    duration: 0.5,
+                    delay: 1.5,
+                    type: "spring",
+                    stiffness: 200,
+                  },
+                }}
+              >
+                <Tooltip
+                  showArrow
+                  content="Close the form"
+                  color="default"
+                  size="lg"
+                  classNames={{
+                    content: "text-lg font-semibold",
+                  }}
                 >
-                  Clear
-                </Button>
-              </Tooltip>
+                  <Button
+                    color="primary"
+                    variant="bordered"
+                    aria-label="Close"
+                    onClick={onCloseClick}
+                    className="w-full font-semibold text-lg"
+                  >
+                    Close
+                  </Button>
+                </Tooltip>
 
-              <Tooltip content="Submit your question" color="primary" size="lg">
-                <Button
-                  radius="full"
-                  color="primary"
-                  variant="shadow"
-                  aria-label="Submit"
-                  isDisabled={isQuestionEmpty}
-                  onClick={onSubmitClick}
-                  className="font-semibold text-lg"
+                <Tooltip
+                  showArrow
+                  content="Clear the form"
+                  color="default"
+                  size="lg"
+                  classNames={{
+                    content: "text-lg font-semibold",
+                  }}
                 >
-                  Submit
-                </Button>
-              </Tooltip>
-            </motion.div>
+                  <Button
+                    color="danger"
+                    variant="shadow"
+                    aria-label="Clear"
+                    isDisabled={fieldsEmpty}
+                    onClick={onClearClick}
+                    className="w-full font-semibold text-lg"
+                  >
+                    Clear
+                  </Button>
+                </Tooltip>
+
+                <Tooltip
+                  showArrow
+                  content="Submit your question"
+                  color="default"
+                  size="lg"
+                  classNames={{
+                    content: "text-lg font-semibold",
+                  }}
+                >
+                  <Button
+                    color="primary"
+                    variant="shadow"
+                    aria-label="Submit"
+                    isDisabled={fieldsEmpty}
+                    onClick={onSubmitClick}
+                    className="w-full font-semibold text-lg bg-gradient-to-tr from-cyan-500 to-blue-500"
+                  >
+                    Submit
+                  </Button>
+                </Tooltip>
+              </motion.div>
+            </>
           )}
         </AnimatePresence>
       </div>
