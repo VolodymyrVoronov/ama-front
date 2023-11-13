@@ -1,6 +1,7 @@
 import { ChangeEvent, useState } from "react";
 import { Button, Tooltip, Textarea, Input } from "@nextui-org/react";
 import { AnimatePresence, motion } from "framer-motion";
+import { useKeyPress } from "ahooks";
 
 import { INewQuestion } from "../../types";
 
@@ -40,6 +41,14 @@ const QuestionForm = (): JSX.Element => {
     setShowCover(false);
     setQuestionData(initialState);
   };
+
+  useKeyPress(13, () => {
+    if (!fieldsEmpty) {
+      onSubmitClick();
+    }
+  });
+
+  useKeyPress(27, onCloseClick);
 
   const fieldsEmpty =
     questionData?.question === "" || questionData?.email === "";
@@ -212,7 +221,7 @@ const QuestionForm = (): JSX.Element => {
                     onClick={onSubmitClick}
                     className="w-full font-semibold text-lg bg-gradient-to-tr from-cyan-500 to-blue-500"
                   >
-                    Submit
+                    Submit {!fieldsEmpty && "| Enter"}
                   </Button>
                 </Tooltip>
               </motion.div>
