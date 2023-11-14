@@ -63,7 +63,7 @@ const NavBar = (): JSX.Element => {
               to={item.link}
               size="lg"
               color={location.pathname === item.link ? "primary" : "foreground"}
-              className="font-bold text-xl"
+              className="font-bold text-xl tracking-wider"
             >
               {item.label}
             </Link>
@@ -103,7 +103,7 @@ const NavBar = (): JSX.Element => {
               to={item.link}
               size="lg"
               color={location.pathname === item.link ? "primary" : "foreground"}
-              className="font-bold text-xl"
+              className="font-bold text-xl tracking-wider"
             >
               {item.label}
             </Link>

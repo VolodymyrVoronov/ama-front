@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { Button, Tooltip, Textarea, Input } from "@nextui-org/react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useKeyPress } from "ahooks";
@@ -7,7 +7,7 @@ import { INewQuestion } from "../../types";
 
 const initialState = {
   question: "",
-  email: "",
+  authorEmail: "",
 };
 
 const QuestionForm = (): JSX.Element => {
@@ -42,6 +42,12 @@ const QuestionForm = (): JSX.Element => {
     setQuestionData(initialState);
   };
 
+  useEffect(() => {
+    if (questionData.question !== "") {
+      setShowCover(true);
+    }
+  }, [questionData.question]);
+
   useKeyPress(13, () => {
     if (!fieldsEmpty) {
       onSubmitClick();
@@ -51,7 +57,7 @@ const QuestionForm = (): JSX.Element => {
   useKeyPress(27, onCloseClick);
 
   const fieldsEmpty =
-    questionData?.question === "" || questionData?.email === "";
+    questionData?.question === "" || questionData?.authorEmail === "";
 
   return (
     <>
@@ -129,9 +135,9 @@ const QuestionForm = (): JSX.Element => {
                   placeholder="Enter your email here..."
                   size="lg"
                   isRequired
-                  name="email"
+                  name="authorEmail"
                   type="email"
-                  value={questionData.email}
+                  value={questionData.authorEmail}
                   onChange={onInputChange}
                   classNames={{
                     input: "text-xl md:text-2xl font-semibold",

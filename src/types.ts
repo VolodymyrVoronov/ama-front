@@ -1,6 +1,13 @@
 export interface INewQuestion {
   question: string;
-  email: string;
+  authorEmail: string;
 }
 
-export interface IQuestionResponse {}
+export interface IQuestionResponse {
+  id: number;
+  question: string;
+  authorEmail: string;
+  answer: string;
+  created_at: string;
+  updated_at: string;
+}

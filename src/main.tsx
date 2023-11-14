@@ -7,6 +7,7 @@ import { Path } from "./constants/index.ts";
 
 import App from "./App.tsx";
 import Home from "./pages/Home/Home.tsx";
+import Questions from "./pages/Questions/Questions.tsx";
 
 import "@fontsource/gruppo";
 
@@ -22,7 +23,7 @@ const router = createBrowserRouter([
       },
       {
         path: Path.QUESTIONS,
-        element: <div>Questions</div>,
+        element: <Questions />,
       },
       {
         path: Path.QUESTION,

@@ -1,4 +1,14 @@
+import { Divider } from "@nextui-org/react";
+
 import QuestionForm from "../../components/QuestionForm/QuestionForm";
+
+const sectionTitle = (title: string): JSX.Element => {
+  return (
+    <span className="flex justify-center text-2xl font-semibold tracking-widest text-default-100">
+      {title}
+    </span>
+  );
+};
 
 const Home = (): JSX.Element => {
   return (
@@ -6,8 +16,16 @@ const Home = (): JSX.Element => {
       <QuestionForm />
 
       <div className="max-w-screen-xl container grid grid-cols-12 gap-5 mt-5">
-        <div className="tile col-span-12 md:col-span-8 bg-slate-300">1</div>
-        <div className="tile col-span-12 md:col-span-4 bg-slate-700">2</div>
+        <div className="tile col-span-12 md:col-span-8 p-2 sm:p-4 bg-gradient-to-tr from-cyan-500 to-blue-500 shadow-lg rounded-xl">
+          {sectionTitle("10 Latest Questions")}
+
+          <Divider className="my-3 bg-default-100 h-0.5 md:h-1 rounded" />
+        </div>
+        <div className="tile col-span-12 md:col-span-4 p-2 sm:p-4 bg-gradient-to-tr from-cyan-500 to-blue-500 shadow-lg rounded-xl">
+          {sectionTitle("Words Cloud")}
+
+          <Divider className="my-3 bg-default-100 h-0.5 md:h-1 rounded" />
+        </div>
       </div>
     </div>
   );
