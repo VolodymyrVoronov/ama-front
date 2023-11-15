@@ -9,7 +9,7 @@ module.exports = {
   ],
   theme: {
     fontFamily: {
-      sans: ["Gruppo", "sans-serif"],
+      sans: ["Comfortaa Variable", "sans-serif"],
     },
   },
   darkMode: "class",

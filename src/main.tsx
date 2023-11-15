@@ -9,7 +9,9 @@ import App from "./App.tsx";
 import Home from "./pages/Home/Home.tsx";
 import Questions from "./pages/Questions/Questions.tsx";
 
-import "@fontsource/gruppo";
+import '@fontsource-variable/comfortaa';
+
+
 
 const router = createBrowserRouter([
   {

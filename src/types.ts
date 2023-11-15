@@ -3,8 +3,14 @@ export interface INewQuestion {
   authorEmail: string;
 }
 
+export interface IQuestionRequest {
+  question: string;
+  authorEmail: string;
+  answer: string;
+}
+
 export interface IQuestionResponse {
-  id: number;
+  id: string;
   question: string;
   authorEmail: string;
   answer: string;

@@ -17,7 +17,7 @@ const Home = (): JSX.Element => {
       <QuestionForm />
 
       <div className="max-w-screen-xl container grid grid-cols-12 gap-5 mt-5">
-        <div className="tile col-span-12 md:col-span-8 p-2 sm:p-4 bg-gradient-to-tr from-cyan-500 to-blue-500 shadow-lg rounded-xl">
+        <div className="tile col-span-12 md:col-span-8 order-2 md:order-1 p-2 sm:p-4 bg-gradient-to-tr from-cyan-500 to-blue-500 shadow-lg rounded-xl">
           {sectionTitle("10 Latest Questions")}
 
           <Divider className="my-3 bg-default-100 h-0.5 md:h-1 rounded" />
@@ -25,7 +25,7 @@ const Home = (): JSX.Element => {
           <QuestionCards />
         </div>
 
-        <div className="tile col-span-12 md:col-span-4 p-2 sm:p-4 bg-gradient-to-tr from-cyan-500 to-blue-500 shadow-lg rounded-xl">
+        <div className="tile col-span-12 md:col-span-4 p-2 order-1 md:order-2 sm:p-4 bg-gradient-to-tr from-cyan-500 to-blue-500 shadow-lg rounded-xl">
           {sectionTitle("Words Cloud")}
 
           <Divider className="my-3 bg-default-100 h-0.5 md:h-1 rounded" />
