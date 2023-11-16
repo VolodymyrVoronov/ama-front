@@ -48,6 +48,18 @@ const QuestionForm = (): JSX.Element => {
     }
   }, [questionData.question]);
 
+  useEffect(() => {
+    if (showCover) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, [showCover]);
+
   useKeyPress(13, () => {
     if (!fieldsEmpty) {
       onSubmitClick();
