@@ -32,7 +32,7 @@ const Logo = ({
           {...props}
         />
       </div>
-      <div className="font-semibold text-xl">
+      <div className="font-semibold text-xl bg-gradient-to-tr from-cyan-500 to-blue-500 bg-clip-text text-transparent">
         <span className="inline md:hidden">{logoTextShort}</span>
         <span className="hidden md:inline">{logoTextLong}</span>
       </div>

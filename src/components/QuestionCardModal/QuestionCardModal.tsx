@@ -145,7 +145,7 @@ const QuestionCardModal = ({
             <ModalFooter>
               <Button
                 color="danger"
-                variant="bordered"
+                variant="light"
                 className="font-semibold text-lg"
                 onPress={onClose}
               >
