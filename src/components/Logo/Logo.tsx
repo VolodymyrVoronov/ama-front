@@ -32,10 +32,10 @@ const Logo = ({
           {...props}
         />
       </div>
-      <p className="font-semibold text-xl">
+      <div className="font-semibold text-xl">
         <span className="inline md:hidden">{logoTextShort}</span>
         <span className="hidden md:inline">{logoTextLong}</span>
-      </p>
+      </div>
     </>
   );
 };

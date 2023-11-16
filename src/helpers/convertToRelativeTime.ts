@@ -1,3 +1,9 @@
+/**
+ * Converts a given date string to a relative time string.
+ *
+ * @param {string} dateString - The date string to convert.
+ * @return {string} The relative time string.
+ */
 export const convertToRelativeTime = (dateString: string): string => {
   const date = new Date(dateString);
   const now = new Date();

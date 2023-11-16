@@ -2,6 +2,8 @@ import { memo, useState } from "react";
 
 import { IQuestionResponse } from "../../types";
 
+import { sortByDate } from "../../helpers/sortByDate";
+
 import QuestionCard from "../QuestionCard/QuestionCard";
 import QuestionCardModal from "../QuestionCardModal/QuestionCardModal";
 
@@ -84,6 +86,56 @@ const mockData: IQuestionResponse[] = [
     created_at: "2023-11-11",
     updated_at: "2023-11-15",
   },
+  {
+    id: "10",
+    question: "Why do we dream?",
+    authorEmail: "neuroscientist@example.com",
+    answer:
+      "The exact purpose of dreaming is still not fully understood, but it is believed to play a role in memory consolidation, emotional processing, and creativity.",
+    created_at: "2023-11-11",
+    updated_at: "2023-11-15",
+  },
+  {
+    id: "11",
+    question: "What is the nature of reality?",
+    authorEmail: "philosophyprof@example.com",
+    answer:
+      "The nature of reality is a fundamental question that has been explored by philosophers, scientists, and thinkers throughout history.",
+    created_at: "2023-11-11",
+    updated_at: "2023-11-15",
+  },
+  {
+    id: "12",
+    question: "Why do we dream?",
+    authorEmail: "neuroscientist@example.com",
+    answer: "",
+    created_at: "2023-11-11",
+    updated_at: "2023-11-15",
+  },
+  {
+    id: "13",
+    question: "What is the nature of reality?",
+    authorEmail: "philosophyprof@example.com",
+    answer: "",
+    created_at: "2023-11-11",
+    updated_at: "2023-11-15",
+  },
+  {
+    id: "14",
+    question: "Why do we dream?",
+    authorEmail: "neuroscientist@example.com",
+    answer: "",
+    created_at: "2023-11-11",
+    updated_at: "2023-11-15",
+  },
+  {
+    id: "15",
+    question: "What is the nature of reality?",
+    authorEmail: "philosophyprof@example.com",
+    answer: "",
+    created_at: "2023-11-11",
+    updated_at: "2023-11-15",
+  },
 ];
 
 const QuestionCards = memo((): JSX.Element => {
@@ -96,6 +148,11 @@ const QuestionCards = memo((): JSX.Element => {
     setQuestion(mockData.find((question) => question.id === id));
   };
 
+  const sortedByDateMockData = sortByDate<IQuestionResponse>(
+    mockData,
+    "created_at"
+  ).slice(0, 10);
+
   return (
     <>
       {question && (
@@ -103,7 +160,7 @@ const QuestionCards = memo((): JSX.Element => {
       )}
 
       <div className="max-w-screen-xl container grid grid-cols-1 xl:grid-cols-2 gap-4">
-        {mockData.map((question) => (
+        {sortedByDateMockData.map((question) => (
           <QuestionCard
             key={question.id}
             questionData={question}
