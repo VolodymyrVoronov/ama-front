@@ -1,6 +1,6 @@
 import { memo, useState } from "react";
 
-import { useQuestionsStore } from "../store/questions";
+import { useQuestionsStore } from "../../store/questions";
 import { sortByDate } from "../../helpers/sortByDate";
 import { IQuestionResponse } from "../../types";
 

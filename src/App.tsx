@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { Outlet } from "react-router-dom";
 
-import { useQuestionsStore } from "./components/store/questions";
+import { useQuestionsStore } from "./store/questions";
 
 import NavBar from "./components/NavBar/NavBar";
 
