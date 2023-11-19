@@ -8,10 +8,11 @@ import NavBar from "./components/NavBar/NavBar";
 import { mockQuestions } from "./components/mock/questions";
 
 const App = (): JSX.Element => {
-  const { setQuestions } = useQuestionsStore();
+  const { setQuestions, setWordsCloud } = useQuestionsStore();
 
   useEffect(() => {
     setQuestions(mockQuestions);
+    setWordsCloud();
   }, []);
 
   return (

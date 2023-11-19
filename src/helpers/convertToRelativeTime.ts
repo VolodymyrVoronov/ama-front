@@ -5,6 +5,10 @@
  * @return {string} The relative time string.
  */
 export const convertToRelativeTime = (dateString: string): string => {
+  if (!dateString) {
+    return "";
+  }
+
   const date = new Date(dateString);
   const now = new Date();
   const delta = now.getTime() - date.getTime();

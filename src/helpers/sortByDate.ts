@@ -9,6 +9,10 @@ export const sortByDate = <T extends { [K in keyof T]: string }>(
   array: T[],
   dateField: keyof T
 ): T[] => {
+  if (!array || !dateField) {
+    return [];
+  }
+
   return array.sort((a, b) => {
     const dateA = new Date(a[dateField]);
     const dateB = new Date(b[dateField]);
