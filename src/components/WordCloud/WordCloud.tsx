@@ -18,7 +18,7 @@ const WordCloud = ({
   return (
     <Button
       onClick={onWordClick}
-      className="flex flex-grow text-md text-default-100 capitalize border-1 border-purple-100"
+      className="flex flex-grow text-md text-white capitalize border-1 border-purple-100"
       variant={selected ? "shadow" : "flat"}
       color={selected ? "primary" : "default"}
     >

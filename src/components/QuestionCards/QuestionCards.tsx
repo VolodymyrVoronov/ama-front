@@ -60,7 +60,7 @@ const QuestionCards = memo((): JSX.Element => {
         <div className="flex justify-center mt-5">
           <Button
             onClick={onLoadMoreButtonClick}
-            className="text-lg font-semibold text-white"
+            className="text-lg font-semibold text-white hover:border"
             color="default"
             variant="light"
             size="lg"
