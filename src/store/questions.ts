@@ -10,24 +10,30 @@ interface IQuestionsStore {
   questions: IQuestionResponse[];
   questionsFilteredByKeyWord: IQuestionResponse[];
   wordsCloud: IWordsCloud[];
+  keyWord: string;
 }
 
 interface IQuestionsStoreActions {
   setQuestions: (questions: IQuestionResponse[]) => void;
+  setWordsCloud: () => void;
+  setKeyWord: (keyWord: string) => void;
   filterQuestionsByKeyWord: (keyWord: string) => void;
   sendQuestion: (questionData: IQuestionRequest) => void;
-  setWordsCloud: () => void;
 }
 
 export const useQuestionsStore = create(
   immer<IQuestionsStore & IQuestionsStoreActions>((set, get) => ({
     questions: [],
     questionsFilteredByKeyWord: [],
-
     wordsCloud: [],
+    keyWord: "",
 
     setQuestions: (questions) => {
       set({ questions: questions });
+    },
+
+    setKeyWord: (keyWord) => {
+      set({ keyWord: keyWord });
     },
 
     filterQuestionsByKeyWord: (keyWord) => {
@@ -37,19 +43,24 @@ export const useQuestionsStore = create(
         set({ questionsFilteredByKeyWord: questions });
       } else {
         set({
-          questionsFilteredByKeyWord: questions.filter((question) =>
-            question.question.toLowerCase().includes(keyWord.toLowerCase())
-          ),
+          questionsFilteredByKeyWord: questions.filter((q) => {
+            const tempQuestions = q.question.toLowerCase().split(/[ !?]+/);
+
+            for (const element of tempQuestions) {
+              if (element === keyWord) {
+                return true;
+              }
+            }
+          }),
         });
       }
     },
-
-    sendQuestion: (questionData) => {},
 
     setWordsCloud: () => {
       const words = sortAlphabetically(extractWords(get().questions));
 
       set({ wordsCloud: words });
     },
+    sendQuestion: (questionData) => {},
   }))
 );

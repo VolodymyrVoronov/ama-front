@@ -1,13 +1,12 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 import { useQuestionsStore } from "../../store/questions";
 
 import WordCloud from "../WordCloud/WordCloud";
 
 const WordsCloud = (): JSX.Element => {
-  const { wordsCloud, filterQuestionsByKeyWord } = useQuestionsStore();
-
-  const [keyWord, setKeyWord] = useState("");
+  const { wordsCloud, keyWord, setKeyWord, filterQuestionsByKeyWord } =
+    useQuestionsStore();
 
   const onWordClickHandler = (word: string): void => {
     setKeyWord(word);

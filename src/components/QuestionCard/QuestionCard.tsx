@@ -7,8 +7,10 @@ import {
   Chip,
   Tooltip,
 } from "@nextui-org/react";
+import Highlighter from "react-highlight-words";
 
 import { IQuestionResponse } from "../../types";
+import { useQuestionsStore } from "../../store/questions";
 
 import { convertToRelativeTime } from "../../helpers/convertToRelativeTime";
 
@@ -22,6 +24,8 @@ const QuestionCard = ({
   questionData,
   onCardClickHandler,
 }: IQuestionCardProps): JSX.Element => {
+  const { keyWord } = useQuestionsStore();
+
   const { id, question, authorEmail, answer, created_at, updated_at } =
     questionData;
 
@@ -67,7 +71,14 @@ const QuestionCard = ({
         <Divider />
 
         <CardBody>
-          <p className="text-lg lg:text-xl font-bold">{question}</p>
+          <p className="text-lg lg:text-xl font-bold">
+            <Highlighter
+              searchWords={[keyWord || ""]}
+              autoEscape={true}
+              textToHighlight={question}
+              highlightClassName="bg-gradient-to-tr from-cyan-500 to-blue-500 bg-clip-text text-transparent"
+            />
+          </p>
         </CardBody>
 
         <Divider />
