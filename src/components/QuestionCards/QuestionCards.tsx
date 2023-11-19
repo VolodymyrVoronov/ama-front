@@ -9,7 +9,7 @@ import QuestionCard from "../QuestionCard/QuestionCard";
 import QuestionCardModal from "../QuestionCardModal/QuestionCardModal";
 
 const QuestionCards = memo((): JSX.Element => {
-  const { questions } = useQuestionsStore();
+  const { questionsFilteredByKeyWord } = useQuestionsStore();
 
   const [question, setQuestion] = useState<IQuestionResponse>();
   const [toggleModal, setToggleModal] = useState(false);
@@ -18,11 +18,13 @@ const QuestionCards = memo((): JSX.Element => {
   const onCardClickHandler = (id: string): void => {
     setToggleModal((prev) => !prev);
 
-    setQuestion(questions.find((question) => question.id === id));
+    setQuestion(
+      questionsFilteredByKeyWord.find((question) => question.id === id)
+    );
   };
 
   const sortedByDateQuestions = sortByDate<IQuestionResponse>(
-    questions,
+    questionsFilteredByKeyWord,
     "created_at"
   ).slice(0, questionCount);
 
@@ -36,7 +38,7 @@ const QuestionCards = memo((): JSX.Element => {
     }, 500);
   };
 
-  const limitReached = questions.length <= questionCount;
+  const limitReached = questionsFilteredByKeyWord.length <= questionCount;
 
   return (
     <>

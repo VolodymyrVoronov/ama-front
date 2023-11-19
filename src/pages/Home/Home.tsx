@@ -1,8 +1,9 @@
 import { motion } from "framer-motion";
-import { Divider } from "@nextui-org/react";
+import { Button, Divider } from "@nextui-org/react";
 
 import QuestionForm from "../../components/QuestionForm/QuestionForm";
 import QuestionCards from "../../components/QuestionCards/QuestionCards";
+import WordsCloud from "../../components/WordsCloud/WordsCloud";
 
 const sectionTitle = (title: string): JSX.Element => {
   return (
@@ -13,6 +14,10 @@ const sectionTitle = (title: string): JSX.Element => {
 };
 
 const Home = (): JSX.Element => {
+  const onScrollToTopButtonClick = (): void => {
+    window.scroll({ top: 0, behavior: "smooth", left: 0 });
+  };
+
   return (
     <motion.div
       className="max-w-screen-xl m-auto mt-5 mb-5 px-3 md:px-6"
@@ -43,12 +48,24 @@ const Home = (): JSX.Element => {
           <QuestionCards />
         </div>
 
-        <div className="tile col-span-12 md:col-span-4 p-2 order-1 md:order-2 sm:p-4 bg-gradient-to-tr from-cyan-500 to-blue-500 shadow-lg rounded-xl">
+        <div className="tile col-span-12 md:col-span-4 p-2 order-1 md:order-2 sm:p-4 self-start bg-gradient-to-tr from-cyan-500 to-blue-500 shadow-lg rounded-xl md:sticky md:top-24">
           {sectionTitle("Words Cloud")}
 
           <Divider className="my-3 bg-default-100 h-0.5 md:h-1 rounded" />
+
+          <WordsCloud />
         </div>
       </div>
+
+      <Button
+        onClick={onScrollToTopButtonClick}
+        className="w-full md:hidden mt-5 bg-gradient-to-tr from-cyan-500 to-blue-500"
+        color="primary"
+        variant="shadow"
+        size="lg"
+      >
+        To top
+      </Button>
     </motion.div>
   );
 };

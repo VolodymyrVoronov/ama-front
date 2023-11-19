@@ -65,6 +65,22 @@ export const extractWords = <T extends { question: string }>(
     "here",
     "when",
     "there",
+    "it",
+    "have",
+    "has",
+    "do",
+    "does",
+    "did",
+    "will",
+    "shall",
+    "should",
+    "can",
+    "could",
+    "would",
+    "may",
+    "might",
+    "must",
+    "had",
   ];
 
   let tempText = "";
@@ -73,9 +89,10 @@ export const extractWords = <T extends { question: string }>(
     tempText += element.question.toLowerCase();
   }
 
-  const regex = new RegExp(`\\b(?:${exceptions.join("|")})\\b`, "gi");
-  const cleanedText = tempText.replace(regex, "");
-  const keywords = cleanedText.match(/[a-zA-Z]+/g) ?? [];
+  const keywords = tempText
+    .replace(/\p{P}/gu, " ")
+    .split(" ")
+    .filter((word) => !exceptions.includes(word) && word !== "");
 
-  return Array.from(new Set(keywords)).concat();
+  return Array.from(new Set(keywords));
 };
