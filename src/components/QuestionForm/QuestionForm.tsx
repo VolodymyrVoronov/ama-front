@@ -1,7 +1,8 @@
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useRef, useState } from "react";
 import { Button, Tooltip, Textarea, Input } from "@nextui-org/react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useKeyPress } from "ahooks";
+import cn from "classnames";
 
 import { INewQuestion } from "../../types";
 
@@ -11,11 +12,15 @@ const initialState = {
 };
 
 const QuestionForm = (): JSX.Element => {
+  const textAreaRef = useRef<HTMLTextAreaElement>(null);
+
   const [showCover, setShowCover] = useState(false);
   const [questionData, setQuestionData] = useState<INewQuestion>(initialState);
+  const [changeZIndex, setChangeZIndex] = useState(false);
 
   const onAreaFocus = (): void => {
     setShowCover(true);
+    window.scrollTo(0, 0);
   };
 
   const onInputChange = (e: ChangeEvent<HTMLInputElement>): void => {
@@ -45,6 +50,7 @@ const QuestionForm = (): JSX.Element => {
   useEffect(() => {
     if (questionData.question !== "") {
       setShowCover(true);
+      window.scrollTo(0, 0);
     }
   }, [questionData.question]);
 
@@ -59,6 +65,22 @@ const QuestionForm = (): JSX.Element => {
       document.body.style.overflow = "unset";
     };
   }, [showCover]);
+
+  useEffect(() => {
+    window.addEventListener("scroll", () => {
+      if (textAreaRef.current) {
+        if (textAreaRef.current.getBoundingClientRect().top < 100) {
+          setChangeZIndex(true);
+        } else {
+          setChangeZIndex(false);
+        }
+      }
+    });
+
+    return () => {
+      window.removeEventListener("scroll", () => {});
+    };
+  }, []);
 
   useKeyPress(13, () => {
     if (!fieldsEmpty) {
@@ -101,7 +123,13 @@ const QuestionForm = (): JSX.Element => {
 
       <div className="w-full p-2 sm:p-4 md:p-8 flex flex-col justify-center items-center bg-gradient-to-tr from-cyan-500 to-blue-500 shadow-lg rounded-xl">
         <Textarea
-          className="w-full md:w-10/12 lg:w-8/12 xl:w-6/12 z-40 shadow-lg"
+          ref={textAreaRef}
+          className={cn(
+            "w-full md:w-10/12 lg:w-8/12 xl:w-6/12 shadow-lg z-40",
+            {
+              "z-30": changeZIndex,
+            }
+          )}
           placeholder="Enter your question here..."
           size="lg"
           isMultiline

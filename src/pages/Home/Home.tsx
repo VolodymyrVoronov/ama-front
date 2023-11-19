@@ -15,27 +15,20 @@ const sectionTitle = (title: string): JSX.Element => {
 const Home = (): JSX.Element => {
   return (
     <motion.div
-      className="max-w-screen-xl m-auto mt-5 px-3 md:px-6"
+      className="max-w-screen-xl m-auto mt-5 mb-5 px-3 md:px-6"
       initial={{
         opacity: 0,
-        scale: 0.5,
       }}
       exit={{
         opacity: 0,
-        scale: 0.5,
         transition: {
           duration: 0.5,
         },
       }}
       animate={{
         opacity: 1,
-        scale: 1,
         transition: {
           duration: 0.5,
-          type: "spring",
-          stiffness: 200,
-          damping: 10,
-          restDelta: 0.001,
         },
       }}
     >
@@ -43,7 +36,7 @@ const Home = (): JSX.Element => {
 
       <div className="max-w-screen-xl container grid grid-cols-12 gap-5 mt-5">
         <div className="tile col-span-12 md:col-span-8 order-2 md:order-1 p-2 sm:p-4 bg-gradient-to-tr from-cyan-500 to-blue-500 shadow-lg rounded-xl">
-          {sectionTitle("10 Latest Questions")}
+          {sectionTitle("Latest Questions")}
 
           <Divider className="my-3 bg-default-100 h-0.5 md:h-1 rounded" />
 

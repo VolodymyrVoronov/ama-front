@@ -1,4 +1,5 @@
 import { memo, useState } from "react";
+import { Button } from "@nextui-org/react";
 
 import { useQuestionsStore } from "../../store/questions";
 import { sortByDate } from "../../helpers/sortByDate";
@@ -12,6 +13,7 @@ const QuestionCards = memo((): JSX.Element => {
 
   const [question, setQuestion] = useState<IQuestionResponse>();
   const [toggleModal, setToggleModal] = useState(false);
+  const [questionCount, setQuestionCount] = useState(6);
 
   const onCardClickHandler = (id: string): void => {
     setToggleModal((prev) => !prev);
@@ -22,7 +24,19 @@ const QuestionCards = memo((): JSX.Element => {
   const sortedByDateQuestions = sortByDate<IQuestionResponse>(
     questions,
     "created_at"
-  ).slice(0, 10);
+  ).slice(0, questionCount);
+
+  const onLoadMoreButtonClick = (): void => {
+    setQuestionCount((prev) => prev + 4);
+
+    const timeoutId = setTimeout(() => {
+      window.scrollBy({ top: 350, behavior: "smooth", left: 0 });
+
+      clearTimeout(timeoutId);
+    }, 500);
+  };
+
+  const limitReached = questions.length <= questionCount;
 
   return (
     <>
@@ -39,6 +53,21 @@ const QuestionCards = memo((): JSX.Element => {
           />
         ))}
       </div>
+
+      {!limitReached && (
+        <div className="flex justify-center mt-5">
+          <Button
+            onClick={onLoadMoreButtonClick}
+            className="text-lg font-semibold text-white"
+            color="default"
+            variant="light"
+            size="lg"
+            aria-label="Load more questions"
+          >
+            Load more...
+          </Button>
+        </div>
+      )}
     </>
   );
 });
