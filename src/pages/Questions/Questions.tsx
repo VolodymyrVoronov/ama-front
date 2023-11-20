@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useRef, useState } from "react";
 import { Input } from "@nextui-org/react";
 import { motion } from "framer-motion";
 import useKeyPress from "ahooks/lib/useKeyPress";
@@ -8,6 +8,8 @@ import { useQuestionsStore } from "../../store/questions";
 const Questions = (): JSX.Element => {
   const { questionsFilteredByAuthorEmail, filterQuestionsByAuthorEmail } =
     useQuestionsStore();
+
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -20,6 +22,12 @@ const Questions = (): JSX.Element => {
   const clearInput = (): void => {
     setSearchQuery("");
   };
+
+  useEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, []);
 
   useEffect(() => {
     filterQuestionsByAuthorEmail(searchQuery);
@@ -50,6 +58,7 @@ const Questions = (): JSX.Element => {
     >
       <div className="w-full p-2 sm:p-4 md:p-8 flex flex-col justify-center items-center bg-gradient-to-tr from-cyan-500 to-blue-500 shadow-lg rounded-xl">
         <Input
+          ref={inputRef}
           className="w-full md:w-10/12 lg:w-8/12 xl:w-6/12 shadow-lg z-40"
           placeholder="Enter your email for search..."
           size="lg"
