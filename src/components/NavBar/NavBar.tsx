@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { memo, useState } from "react";
 import { Link as RouterLink, useLocation } from "react-router-dom";
 import {
   Navbar,
@@ -27,7 +27,7 @@ const menuItems = [
   },
 ];
 
-const NavBar = (): JSX.Element => {
+const NavBar = memo((): JSX.Element => {
   const location = useLocation();
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -112,6 +112,6 @@ const NavBar = (): JSX.Element => {
       </NavbarMenu>
     </Navbar>
   );
-};
+});
 
 export default NavBar;

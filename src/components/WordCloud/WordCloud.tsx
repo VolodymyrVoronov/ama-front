@@ -1,4 +1,5 @@
-import { Button } from "@nextui-org/react";
+import { Button } from "@nextui-org/button";
+import { motion } from "framer-motion";
 
 interface IWordCloudProps {
   word: string;
@@ -21,6 +22,8 @@ const WordCloud = ({
       className="flex flex-grow text-md text-white capitalize border-1 border-purple-100"
       variant={selected ? "shadow" : "flat"}
       color={selected ? "primary" : "default"}
+      as={motion.button}
+      whileHover={{ scale: 1.05 }}
     >
       {word}
     </Button>

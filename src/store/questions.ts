@@ -9,6 +9,7 @@ import { sortAlphabetically } from "../helpers/sortAlphabetically";
 interface IQuestionsStore {
   questions: IQuestionResponse[];
   questionsFilteredByKeyWord: IQuestionResponse[];
+  questionsFilteredByAuthorEmail: IQuestionResponse[];
   wordsCloud: IWordsCloud[];
   keyWord: string;
 }
@@ -18,6 +19,7 @@ interface IQuestionsStoreActions {
   setWordsCloud: () => void;
   setKeyWord: (keyWord: string) => void;
   filterQuestionsByKeyWord: (keyWord: string) => void;
+  filterQuestionsByAuthorEmail: (authorEmail: string) => void;
   sendQuestion: (questionData: IQuestionRequest) => void;
 }
 
@@ -25,6 +27,7 @@ export const useQuestionsStore = create(
   immer<IQuestionsStore & IQuestionsStoreActions>((set, get) => ({
     questions: [],
     questionsFilteredByKeyWord: [],
+    questionsFilteredByAuthorEmail: [],
     wordsCloud: [],
     keyWord: "",
 
@@ -52,6 +55,20 @@ export const useQuestionsStore = create(
               }
             }
           }),
+        });
+      }
+    },
+
+    filterQuestionsByAuthorEmail: (authorEmail) => {
+      const { questions } = get();
+
+      if (!authorEmail) {
+        set({ questionsFilteredByAuthorEmail: questions });
+      } else {
+        set({
+          questionsFilteredByAuthorEmail: questions.filter((q) =>
+            q.authorEmail.includes(authorEmail)
+          ),
         });
       }
     },

@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { motion } from "framer-motion";
 
 import { useQuestionsStore } from "../../store/questions";
 
@@ -22,13 +23,29 @@ const WordsCloud = (): JSX.Element => {
 
   return (
     <div className="flex flex-wrap gap-3">
-      {wordsCloud.map((word) => (
-        <WordCloud
+      {wordsCloud.map((word, index) => (
+        <motion.span
           key={word}
-          word={word}
-          selected={keyWord === word}
-          onWordClickHandler={onWordClickHandler}
-        />
+          className="flex flex-grow"
+          initial={{
+            opacity: 0,
+            scale: 0.75,
+          }}
+          animate={{
+            opacity: 1,
+            scale: 1,
+            transition: {
+              duration: 0.5,
+              delay: 0.05 * index,
+            },
+          }}
+        >
+          <WordCloud
+            word={word}
+            selected={keyWord === word}
+            onWordClickHandler={onWordClickHandler}
+          />
+        </motion.span>
       ))}
     </div>
   );

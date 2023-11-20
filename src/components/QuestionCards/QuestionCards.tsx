@@ -1,5 +1,6 @@
 import { memo, useState } from "react";
 import { Button } from "@nextui-org/react";
+import { motion } from "framer-motion";
 
 import { useQuestionsStore } from "../../store/questions";
 import { sortByDate } from "../../helpers/sortByDate";
@@ -65,6 +66,8 @@ const QuestionCards = memo((): JSX.Element => {
             variant="light"
             size="lg"
             aria-label="Load more questions"
+            as={motion.button}
+            whileHover={{ scale: 1.05 }}
           >
             Load more...
           </Button>

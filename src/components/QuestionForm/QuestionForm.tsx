@@ -1,7 +1,7 @@
 import { ChangeEvent, useEffect, useRef, useState } from "react";
 import { Button, Tooltip, Textarea, Input } from "@nextui-org/react";
 import { AnimatePresence, motion } from "framer-motion";
-import { useKeyPress } from "ahooks";
+import useKeyPress from "ahooks/lib/useKeyPress";
 import cn from "classnames";
 
 import { INewQuestion } from "../../types";
