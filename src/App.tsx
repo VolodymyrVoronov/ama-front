@@ -5,7 +5,7 @@ import { useQuestionsStore } from "./store/questions";
 
 import NavBar from "./components/NavBar/NavBar";
 
-import { mockQuestions } from "./components/mock/questions";
+import { mockQuestions } from "./mock/questions";
 
 const App = (): JSX.Element => {
   const { setQuestions, setWordsCloud } = useQuestionsStore();

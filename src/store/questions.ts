@@ -78,6 +78,7 @@ export const useQuestionsStore = create(
 
       set({ wordsCloud: words });
     },
+
     sendQuestion: (questionData) => {},
   }))
 );
