@@ -8,6 +8,7 @@ import { useQuestionsStore } from "../../store/questions";
 
 import QuestionCardDetailed from "../../components/QuestionCardDetailed/QuestionCardDetailed";
 import ScrollProgress from "../../components/ScrollProgress/ScrollProgress";
+import BackToTopButton from "../../components/BackToTopButton/BackToTopButton";
 
 const Questions = (): JSX.Element => {
   const { questionsFilteredByAuthorEmail, filterQuestionsByAuthorEmail } =
@@ -54,6 +55,8 @@ const Questions = (): JSX.Element => {
   return (
     <>
       <ScrollProgress />
+
+      <BackToTopButton />
 
       <motion.div
         className="max-w-screen-xl m-auto mt-5 px-3 md:px-6"
