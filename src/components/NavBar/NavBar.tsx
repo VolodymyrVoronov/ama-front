@@ -1,5 +1,5 @@
 import { memo, useState } from "react";
-import { Link as RouterLink, useLocation } from "react-router-dom";
+import { Link as RouterLink, useLocation, useNavigate } from "react-router-dom";
 import {
   Navbar,
   NavbarBrand,
@@ -20,8 +20,9 @@ import Logo from "../Logo/Logo";
 
 const NavBar = memo((): JSX.Element => {
   const location = useLocation();
+  const navigate = useNavigate();
 
-  const { jwtToken } = useAuthStore();
+  const { jwtToken, logOut } = useAuthStore();
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -36,6 +37,13 @@ const NavBar = memo((): JSX.Element => {
     },
     ...(jwtToken ? [{ label: "Admin", link: Path.ADMIN }] : []),
   ];
+
+  const onLoginButtonClick = (): void => {};
+
+  const onLogoutButtonClick = (): void => {
+    logOut();
+    navigate(Path.HOME);
+  };
 
   return (
     <Navbar
@@ -68,6 +76,7 @@ const NavBar = memo((): JSX.Element => {
               to={item.link}
               size="lg"
               color={location.pathname === item.link ? "primary" : "foreground"}
+              underline={location.pathname === item.link ? "always" : "none"}
               className="font-bold text-xl tracking-wider"
             >
               {item.label}
@@ -80,6 +89,7 @@ const NavBar = memo((): JSX.Element => {
         {jwtToken ? (
           <NavbarItem>
             <Button
+              onClick={onLogoutButtonClick}
               color="danger"
               variant="bordered"
               className="font-semibold text-lg"
@@ -90,6 +100,7 @@ const NavBar = memo((): JSX.Element => {
         ) : (
           <NavbarItem>
             <Button
+              onClick={onLoginButtonClick}
               color="primary"
               variant="shadow"
               className="font-semibold text-lg bg-gradient-to-tr from-cyan-500 to-blue-500"
@@ -111,6 +122,7 @@ const NavBar = memo((): JSX.Element => {
               to={item.link}
               size="lg"
               color={location.pathname === item.link ? "primary" : "foreground"}
+              underline={location.pathname === item.link ? "always" : "none"}
               className="font-bold text-xl tracking-wider"
             >
               {item.label}

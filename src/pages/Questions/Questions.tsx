@@ -95,6 +95,7 @@ const Questions = (): JSX.Element => {
             onClear={clearInput}
           />
         </div>
+
         {searching && (
           <Progress
             size="md"
@@ -106,6 +107,7 @@ const Questions = (): JSX.Element => {
             }}
           />
         )}
+
         {questionsFilteredByAuthorEmail.length === 0 && !searching && (
           <motion.p
             className="mt-5 text-3xl font-semibold  text-center"

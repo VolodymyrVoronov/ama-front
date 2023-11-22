@@ -21,7 +21,7 @@ export const mockQuestions = [
     question: "What is the meaning of love?",
     authorEmail: "romantic@example.com",
     answer: "",
-    created_at: "2022-03-01",
+    created_at: "1989-03-01",
     updated_at: "2022-03-02",
   },
   {
@@ -38,7 +38,7 @@ export const mockQuestions = [
     question: "What is the secret to happiness?",
     authorEmail: "happinessguru@example.com",
     answer: "",
-    created_at: "2022-05-01",
+    created_at: "1999-05-01",
     updated_at: "2022-05-02",
   },
   {
@@ -47,7 +47,7 @@ export const mockQuestions = [
     authorEmail: "dreamer@example.com",
     answer:
       "You can't physically catch a cloud, but you can appreciate its beauty and enjoy the moment.",
-    created_at: "2022-06-01",
+    created_at: "1959-06-01",
     updated_at: "2022-06-02",
   },
   {

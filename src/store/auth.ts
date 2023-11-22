@@ -19,7 +19,7 @@ interface IAuthStoreActions {
 export const useAuthStore = create(
   immer<IAuthStore & IAuthStoreActions>((set, get) => ({
     admin: null,
-    jwtToken: "",
+    jwtToken: "sd",
 
     logIn: (adminData) => {
       set({ admin: adminData });
