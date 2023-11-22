@@ -9,7 +9,7 @@ const Admin = (): JSX.Element => {
 
   const sortedDate = extractSortedDates(questions, "created_at");
 
-  const questionByDateArray = sortedDate.reduce(
+  const questionGroupedByDate = sortedDate.reduce(
     (acc: { date: string; questions: IQuestionResponse[] }[], date) => {
       const questionsForDate = questions.filter((q) => q.created_at === date);
 
@@ -20,7 +20,7 @@ const Admin = (): JSX.Element => {
     []
   );
 
-  console.log(questionByDateArray);
+  console.log(questionGroupedByDate);
 
   return (
     <motion.div
@@ -41,7 +41,7 @@ const Admin = (): JSX.Element => {
         },
       }}
     >
-      {questionByDateArray.map((q) => (
+      {questionGroupedByDate.map((q) => (
         <div key={q.date}>{q.date}</div>
       ))}
     </motion.div>
