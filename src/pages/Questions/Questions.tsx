@@ -47,6 +47,7 @@ const Questions = (): JSX.Element => {
   useEffect(() => {
     if (searchQuery.length === 0) {
       filterQuestionsByAuthorEmail(searchQuery);
+      setSearching(false);
     }
   }, [searchQuery]);
 

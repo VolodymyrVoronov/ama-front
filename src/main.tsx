@@ -8,10 +8,9 @@ import { Path } from "./constants/index.ts";
 import App from "./App.tsx";
 import Home from "./pages/Home/Home.tsx";
 import Questions from "./pages/Questions/Questions.tsx";
+import Admin from "./pages/Admin/Admin.tsx";
 
-import '@fontsource-variable/comfortaa';
-
-
+import "@fontsource-variable/comfortaa";
 
 const router = createBrowserRouter([
   {
@@ -28,8 +27,8 @@ const router = createBrowserRouter([
         element: <Questions />,
       },
       {
-        path: Path.QUESTION,
-        element: <div>Question</div>,
+        path: Path.ADMIN,
+        element: <Admin />,
       },
     ],
   },

@@ -12,25 +12,30 @@ import {
   NavbarMenuItem,
 } from "@nextui-org/react";
 
+import { useAuthStore } from "../../store/auth";
+
 import { Path } from "../../constants";
 
 import Logo from "../Logo/Logo";
 
-const menuItems = [
-  {
-    label: "Home",
-    link: Path.HOME,
-  },
-  {
-    label: "Questions",
-    link: Path.QUESTIONS,
-  },
-];
-
 const NavBar = memo((): JSX.Element => {
   const location = useLocation();
 
+  const { jwtToken } = useAuthStore();
+
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const menuItems = [
+    {
+      label: "Home",
+      link: Path.HOME,
+    },
+    {
+      label: "Questions",
+      link: Path.QUESTIONS,
+    },
+    ...(jwtToken ? [{ label: "Admin", link: Path.ADMIN }] : []),
+  ];
 
   return (
     <Navbar
@@ -72,24 +77,27 @@ const NavBar = memo((): JSX.Element => {
       </NavbarContent>
 
       <NavbarContent justify="end">
-        <NavbarItem>
-          <Button
-            color="primary"
-            variant="shadow"
-            className="font-semibold text-lg bg-gradient-to-tr from-cyan-500 to-blue-500"
-          >
-            Login
-          </Button>
-        </NavbarItem>
-        <NavbarItem>
-          <Button
-            color="danger"
-            variant="bordered"
-            className="font-semibold text-lg"
-          >
-            Logout
-          </Button>
-        </NavbarItem>
+        {jwtToken ? (
+          <NavbarItem>
+            <Button
+              color="danger"
+              variant="bordered"
+              className="font-semibold text-lg"
+            >
+              Logout
+            </Button>
+          </NavbarItem>
+        ) : (
+          <NavbarItem>
+            <Button
+              color="primary"
+              variant="shadow"
+              className="font-semibold text-lg bg-gradient-to-tr from-cyan-500 to-blue-500"
+            >
+              Login
+            </Button>
+          </NavbarItem>
+        )}
       </NavbarContent>
 
       <NavbarMenu className="bg-gray-50 border-1.5 z-50">

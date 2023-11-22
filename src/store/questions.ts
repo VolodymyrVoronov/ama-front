@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
 
-import { IQuestionRequest, IQuestionResponse, IWordsCloud } from "../types";
+import { IQuestionRequest, IQuestionResponse } from "../types";
 
 import { extractWords } from "../helpers/extractWords";
 import { sortAlphabetically } from "../helpers/sortAlphabetically";
@@ -10,7 +10,7 @@ interface IQuestionsStore {
   questions: IQuestionResponse[];
   questionsFilteredByKeyWord: IQuestionResponse[];
   questionsFilteredByAuthorEmail: IQuestionResponse[];
-  wordsCloud: IWordsCloud[];
+  wordsCloud: string[];
   keyWord: string;
 }
 

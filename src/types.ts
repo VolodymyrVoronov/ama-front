@@ -18,4 +18,7 @@ export interface IQuestionResponse {
   updated_at: string;
 }
 
-export type IWordsCloud = string;
+export type IAdminData = {
+  email: string;
+  password: string;
+};
