@@ -1,8 +1,11 @@
+import { useLayoutEffect } from "react";
 import { motion } from "framer-motion";
 
 import { useQuestionsStore } from "../../store/questions";
-import { extractSortedDates } from "../../helpers/extractSortedDates";
 import { IQuestionResponse } from "../../types";
+import { extractSortedDates } from "../../helpers/extractSortedDates";
+
+import QuestionCardsAdmin from "../../components/QuestionCardsAdmin/QuestionCardsAdmin";
 
 const Admin = (): JSX.Element => {
   const { questions } = useQuestionsStore();
@@ -20,29 +23,33 @@ const Admin = (): JSX.Element => {
     []
   );
 
-  console.log(questionGroupedByDate);
+  useLayoutEffect(() => {
+    const timeoutId = setTimeout(() => {
+      window.scrollBy({ top: 1, behavior: "smooth", left: 0 });
+
+      clearTimeout(timeoutId);
+    }, 100);
+  }, []);
 
   return (
     <motion.div
-      className="max-w-screen-xl m-auto mt-5 px-3 md:px-6"
+      className="flex flex-col max-w-screen-xl m-auto px-3 md:px-6"
       initial={{
         opacity: 0,
-      }}
-      exit={{
-        opacity: 0,
-        transition: {
-          duration: 0.5,
-        },
       }}
       animate={{
         opacity: 1,
         transition: {
-          duration: 0.5,
+          duration: 1,
         },
       }}
     >
       {questionGroupedByDate.map((q) => (
-        <div key={q.date}>{q.date}</div>
+        <QuestionCardsAdmin
+          key={q.date}
+          date={q.date}
+          questions={q.questions}
+        />
       ))}
     </motion.div>
   );

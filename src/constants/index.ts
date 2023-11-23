@@ -1,4 +1,4 @@
-export const Path: Record<string, string> = {
+export const Path = {
   HOME: "/",
   QUESTIONS: "/questions",
   ADMIN: "/admin",

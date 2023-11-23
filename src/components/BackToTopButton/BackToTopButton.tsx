@@ -1,6 +1,12 @@
 import { Button } from "@nextui-org/react";
 
-const BackToTopButton = (): JSX.Element => {
+interface IBackToTopButtonProps {
+  text?: string;
+}
+
+const BackToTopButton = ({
+  text = "Up",
+}: IBackToTopButtonProps): JSX.Element => {
   const onBackToTopButtonClick = (): void =>
     window.scrollTo({ top: 0, behavior: "smooth" });
 
@@ -12,7 +18,7 @@ const BackToTopButton = (): JSX.Element => {
         variant="flat"
         className="font-semibold text-md text-white bg-gradient-to-tr from-cyan-500 to-blue-500 shadow-lg"
       >
-        To top
+        {text}
       </Button>
     </span>
   );
