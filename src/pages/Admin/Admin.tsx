@@ -33,7 +33,7 @@ const Admin = (): JSX.Element => {
 
   return (
     <motion.div
-      className="flex flex-col max-w-screen-xl m-auto px-3 md:px-6"
+      className="flex flex-col gap-5 max-w-screen-xl m-auto mt-5 mb-5 px-3 md:px-6"
       initial={{
         opacity: 0,
       }}

@@ -1,8 +1,10 @@
 import { useRef, useEffect, useState } from "react";
 import { Divider } from "@nextui-org/react";
-import { motion } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 
 import { IQuestionResponse } from "../../types";
+
+import QuestionCardAdmin from "../QuestionCardAdmin/QuestionCardAdmin";
 
 interface IQuestionCardsAdminProps {
   date: string;
@@ -14,13 +16,16 @@ const QuestionCardsAdmin = ({
   questions,
 }: IQuestionCardsAdminProps): JSX.Element => {
   const questionContainerRef = useRef<HTMLDivElement>(null);
+  const isQuestionContainerInView = useInView(questionContainerRef, {
+    margin: "0px 0px -100px 0px",
+  });
 
   const [toggleStyles, setToggleStyles] = useState(false);
 
   useEffect(() => {
     window.addEventListener("scroll", () => {
       if (questionContainerRef.current) {
-        if (questionContainerRef.current.getBoundingClientRect().top < 100) {
+        if (questionContainerRef.current.getBoundingClientRect().top < 250) {
           setToggleStyles(true);
         } else {
           setToggleStyles(false);
@@ -34,12 +39,15 @@ const QuestionCardsAdmin = ({
   }, []);
 
   return (
-    <div
+    <motion.div
       ref={questionContainerRef}
       key={date}
-      className="py-3 md:py-5 bg-white sticky top-20"
+      className={isQuestionContainerInView ? "opacity-100" : "opacity-0"}
+      initial={{ opacity: 0 }}
+      animate={isQuestionContainerInView ? { opacity: 1 } : { opacity: 0 }}
+      transition={{ duration: 1 }}
     >
-      <div className="w-full p-2 sm:p-4 md:p-8 flex flex-col bg-gradient-to-tr from-cyan-500 to-blue-500">
+      <div className="w-full p-2 sm:p-4 md:p-8 flex flex-col bg-gradient-to-tr from-cyan-500 to-blue-500 shadow-lg rounded-xl">
         <motion.span
           className="font-semibold text-left text-white"
           initial={{ fontSize: "2rem" }}
@@ -49,15 +57,15 @@ const QuestionCardsAdmin = ({
           {date}
         </motion.span>
 
-        <Divider className="my-2 h-1 bg-white rounded-full" />
+        <Divider className="mt-2 mb-4 h-1 bg-white rounded-full" />
 
-        {questions.map((question) => (
-          <div key={question.id}>
-            <div>{question.question}</div>
-          </div>
-        ))}
+        <div className="max-w-screen-xl container grid grid-cols-1 xl:grid-cols-2 gap-4">
+          {questions.map((question) => (
+            <QuestionCardAdmin key={question.id} questionData={question} />
+          ))}
+        </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 
