@@ -51,7 +51,7 @@ const QuestionCardAdmin = ({
       <Divider />
 
       <CardFooter>
-        <span className="flex flex-row flex-wrap gap-3 text-md lg:text-lg font-semibold">
+        <span className="flex flex-row flex-wrap gap-3 items-center text-md lg:text-lg font-semibold">
           Answered:
           {isQuestionAnswered ? (
             <span className="flex flex-row gap-3 items-center">
