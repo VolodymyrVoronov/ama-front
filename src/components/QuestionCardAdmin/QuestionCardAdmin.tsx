@@ -55,14 +55,6 @@ const QuestionCardAdmin = ({
           Answered:
           {isQuestionAnswered ? (
             <span className="flex flex-row gap-3 items-center">
-              <Button
-                className="text-md font-bold rounded-full"
-                variant="ghost"
-                color="primary"
-                size="sm"
-              >
-                Edit answer
-              </Button>
               <Chip
                 className="text-md font-bold text-black"
                 color="default"
@@ -71,6 +63,14 @@ const QuestionCardAdmin = ({
               >
                 {convertToRelativeTime(updated_at)}
               </Chip>
+              <Button
+                className="text-md font-bold rounded-full"
+                variant="ghost"
+                color="primary"
+                size="sm"
+              >
+                Edit answer
+              </Button>
             </span>
           ) : (
             <Button
