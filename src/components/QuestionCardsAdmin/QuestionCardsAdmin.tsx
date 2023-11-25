@@ -59,7 +59,7 @@ const QuestionCardsAdmin = ({
 
         <Divider className="mt-2 mb-4 h-1 bg-white rounded-full" />
 
-        <div className="max-w-screen-xl container grid grid-cols-1 xl:grid-cols-2 gap-4">
+        <div className="max-w-screen-xl container grid grid-cols-1 lg:grid-cols-2 gap-4">
           {questions.map((question) => (
             <QuestionCardAdmin key={question.id} questionData={question} />
           ))}

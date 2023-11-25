@@ -1,3 +1,4 @@
+import { ChangeEvent, useRef, useState } from "react";
 import {
   Card,
   CardBody,
@@ -6,7 +7,10 @@ import {
   Chip,
   Divider,
   Button,
+  Textarea,
+  ButtonGroup,
 } from "@nextui-org/react";
+import useKeyPress from "ahooks/lib/useKeyPress";
 
 import { IQuestionResponse } from "../../types";
 import { convertToRelativeTime } from "../../helpers/convertToRelativeTime";
@@ -21,10 +25,76 @@ const QuestionCardAdmin = ({
   const { id, question, authorEmail, answer, created_at, updated_at } =
     questionData;
 
+  const textAreaRef = useRef<HTMLTextAreaElement>(null);
+
+  const [answerData, setAnswerData] = useState(answer || "");
+  const [editMode, setEditMode] = useState(false);
+
   const isQuestionAnswered = answer !== "";
 
+  const focusOnTextArea = (): void => {
+    const timeoutId = setTimeout(() => {
+      textAreaRef.current?.focus();
+      clearTimeout(timeoutId);
+    }, 100);
+  };
+
+  const onAnswerQuestionButtonClick = (): void => {
+    setEditMode(true);
+    focusOnTextArea();
+  };
+
+  const onEditQuestionButtonClick = (): void => {
+    setEditMode(true);
+    focusOnTextArea();
+  };
+
+  const onSubmitButtonClick = (): void => {
+    setEditMode(false);
+
+    console.log(answerData);
+  };
+
+  const onCloseButtonClick = (): void => {
+    setEditMode(false);
+    setAnswerData(answer || "");
+  };
+
+  const onTextAreaChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target;
+
+    setAnswerData(value);
+  };
+
+  useKeyPress(27, () => {
+    setEditMode(false);
+    setAnswerData(answer || "");
+  });
+
+  const footerButtons = () => (
+    <ButtonGroup className="w-full">
+      <Button
+        onClick={onCloseButtonClick}
+        className="w-full"
+        variant="shadow"
+        color="danger"
+      >
+        Close
+      </Button>
+      <Button
+        onClick={onSubmitButtonClick}
+        className="w-full"
+        variant="shadow"
+        color="primary"
+        isDisabled={!answerData}
+      >
+        Submit
+      </Button>
+    </ButtonGroup>
+  );
+
   return (
-    <Card className="min-w-[200px] max-w-full shadow-lg">
+    <Card className="grid content-start min-w-[200px] max-w-full shadow-lg">
       <CardHeader className="flex flex-col gap-3 items-start">
         <p className="text-lg lg:text-xl font-bold text-left break-all">
           {authorEmail}
@@ -64,8 +134,9 @@ const QuestionCardAdmin = ({
                 {convertToRelativeTime(updated_at)}
               </Chip>
               <Button
+                onClick={onEditQuestionButtonClick}
                 className="text-md font-bold rounded-full"
-                variant="ghost"
+                variant={editMode ? "solid" : "ghost"}
                 color="primary"
                 size="sm"
               >
@@ -74,8 +145,9 @@ const QuestionCardAdmin = ({
             </span>
           ) : (
             <Button
+              onClick={onAnswerQuestionButtonClick}
               className="text-md font-bold rounded-full"
-              variant="ghost"
+              variant={editMode ? "solid" : "ghost"}
               color="secondary"
               size="sm"
             >
@@ -85,10 +157,68 @@ const QuestionCardAdmin = ({
         </span>
       </CardFooter>
 
-      {isQuestionAnswered && (
-        <CardFooter>
-          <p className="text-lg lg:text-xl font-bold">{answer}</p>
-        </CardFooter>
+      {!isQuestionAnswered && editMode && (
+        <>
+          <Divider />
+          <CardFooter className="grid gap-5">
+            <Textarea
+              ref={textAreaRef}
+              className="w-full"
+              placeholder="Enter your answer here..."
+              size="md"
+              isMultiline
+              isRequired
+              name="answer"
+              variant="flat"
+              color="primary"
+              value={answerData}
+              onChange={onTextAreaChange}
+              classNames={{
+                input: "text-lg md:text-xl font-semibold",
+              }}
+            />
+
+            {footerButtons()}
+          </CardFooter>
+        </>
+      )}
+
+      {isQuestionAnswered && editMode ? (
+        <>
+          <Divider />
+          <CardFooter className="grid gap-5">
+            <Textarea
+              ref={textAreaRef}
+              className="w-full"
+              placeholder="Enter your answer here..."
+              size="md"
+              isMultiline
+              isRequired
+              name="answer"
+              variant="flat"
+              color="primary"
+              value={answerData}
+              onChange={onTextAreaChange}
+              classNames={{
+                input: "text-lg md:text-xl font-semibold",
+              }}
+            />
+
+            {footerButtons()}
+          </CardFooter>
+        </>
+      ) : (
+        <>
+          {isQuestionAnswered && (
+            <>
+              <Divider />
+
+              <CardFooter>
+                <p className="text-lg lg:text-xl font-bold">{answer}</p>
+              </CardFooter>
+            </>
+          )}
+        </>
       )}
     </Card>
   );
