@@ -1,4 +1,3 @@
-import { useLayoutEffect } from "react";
 import { motion } from "framer-motion";
 
 import { useQuestionsStore } from "../../store/questions";
@@ -22,14 +21,6 @@ const Admin = (): JSX.Element => {
     },
     []
   );
-
-  useLayoutEffect(() => {
-    const timeoutId = setTimeout(() => {
-      window.scrollBy({ top: 1, behavior: "smooth", left: 0 });
-
-      clearTimeout(timeoutId);
-    }, 100);
-  }, []);
 
   return (
     <motion.div

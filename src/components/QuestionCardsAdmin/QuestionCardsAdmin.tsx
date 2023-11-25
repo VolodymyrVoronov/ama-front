@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState } from "react";
+import { useRef } from "react";
 import { Divider } from "@nextui-org/react";
 import { motion, useInView } from "framer-motion";
 
@@ -20,24 +20,6 @@ const QuestionCardsAdmin = ({
     margin: "0px 0px -100px 0px",
   });
 
-  const [toggleStyles, setToggleStyles] = useState(false);
-
-  useEffect(() => {
-    window.addEventListener("scroll", () => {
-      if (questionContainerRef.current) {
-        if (questionContainerRef.current.getBoundingClientRect().top < 250) {
-          setToggleStyles(true);
-        } else {
-          setToggleStyles(false);
-        }
-      }
-    });
-
-    return () => {
-      window.removeEventListener("scroll", () => {});
-    };
-  }, []);
-
   return (
     <motion.div
       ref={questionContainerRef}
@@ -51,7 +33,11 @@ const QuestionCardsAdmin = ({
         <motion.span
           className="font-semibold text-left text-white"
           initial={{ fontSize: "2rem" }}
-          animate={toggleStyles ? { fontSize: "2rem" } : { fontSize: "1.5rem" }}
+          animate={
+            isQuestionContainerInView
+              ? { fontSize: "2rem" }
+              : { fontSize: "1.5rem" }
+          }
           transition={{ duration: 0.5, type: "spring", bounce: 0.5 }}
         >
           {date}
