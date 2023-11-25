@@ -11,7 +11,7 @@ interface ILogoProps extends ImageProps {
 }
 
 const Logo = ({
-  imgSrc = "./public/assets/logo.png",
+  imgSrc = "./assets/logo.png",
   alt = "AMA Logo",
   logoTextShort = "AMA",
   logoTextLong = "Ask Me Anything",

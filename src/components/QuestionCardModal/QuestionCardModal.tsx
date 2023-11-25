@@ -50,7 +50,7 @@ const QuestionCardModal = ({
               <div className="flex flex-row gap-5 items-center">
                 <Image
                   className="px-1 py-1 md:px-2 md:py-2"
-                  src="./public/assets/logo.png"
+                  src="./assets/logo.png"
                   shadow="md"
                   alt="Question logo"
                   classNames={{

@@ -81,7 +81,7 @@ const Auth = (): JSX.Element => {
           <div className="flex flex-col gap-5 items-center">
             <Image
               className="px-1 py-1 md:px-2 md:py-2"
-              src="./public/assets/logo.png"
+              src="./assets/logo.png"
               shadow="md"
               alt="Question logo"
               classNames={{
