@@ -10,10 +10,14 @@ import {
   Textarea,
   ButtonGroup,
 } from "@nextui-org/react";
+import { motion, AnimatePresence } from "framer-motion";
 import useKeyPress from "ahooks/lib/useKeyPress";
+import useScroll from "ahooks/lib/useScroll";
 
 import { IQuestionResponse } from "../../types";
 import { convertToRelativeTime } from "../../helpers/convertToRelativeTime";
+
+import BackToTopButton from "../BackToTopButton/BackToTopButton";
 
 interface IQuestionCardAdminProps {
   questionData: IQuestionResponse;
@@ -26,6 +30,7 @@ const QuestionCardAdmin = ({
     questionData;
 
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
+  const scroll = useScroll();
 
   const [answerData, setAnswerData] = useState(answer || "");
   const [editMode, setEditMode] = useState(false);
@@ -112,104 +117,183 @@ const QuestionCardAdmin = ({
     />
   );
 
+  const showBackToTopButton = scroll && scroll.top > 300;
+
   return (
-    <Card className="grid content-start min-w-[200px] max-w-full shadow-lg">
-      <CardHeader className="flex flex-col gap-3 items-start">
-        <p className="text-lg lg:text-xl font-bold text-left break-all">
-          {authorEmail}
-        </p>
-        <div className="flex flex-row gap-3">
-          <span className="text-md lg:text-lg font-semibold">Asked:</span>
-          <Chip
-            className="text-md font-bold"
-            color="default"
-            variant="flat"
-            size="md"
-          >
-            {convertToRelativeTime(created_at)}
-          </Chip>
-        </div>
-      </CardHeader>
+    <>
+      {showBackToTopButton && <BackToTopButton />}
 
-      <Divider />
-
-      <CardBody>
-        <p className="text-lg lg:text-xl font-bold">{question}</p>
-      </CardBody>
-
-      <Divider />
-
-      <CardFooter>
-        <span className="flex flex-row flex-wrap gap-3 items-center text-md lg:text-lg font-semibold">
-          Answered:
-          {isQuestionAnswered ? (
-            <span className="flex flex-row gap-3 items-center">
-              <Chip
-                className="text-md font-bold text-black"
-                color="default"
-                variant="flat"
-                size="lg"
-              >
-                {convertToRelativeTime(updated_at)}
-              </Chip>
-              <Button
-                onClick={onEditQuestionButtonClick}
-                className="text-md font-bold rounded-full"
-                variant={editMode ? "solid" : "ghost"}
-                color="primary"
-                size="sm"
-              >
-                Edit answer
-              </Button>
-            </span>
-          ) : (
-            <Button
-              onClick={onAnswerQuestionButtonClick}
-              className="text-md font-bold rounded-full"
-              variant={editMode ? "solid" : "ghost"}
-              color="secondary"
-              size="sm"
+      <Card className="grid content-start min-w-[200px] max-w-full shadow-lg">
+        <CardHeader className="flex flex-col gap-3 items-start">
+          <p className="text-lg lg:text-xl font-bold text-left break-all">
+            {authorEmail}
+          </p>
+          <div className="flex flex-row gap-3">
+            <span className="text-md lg:text-lg font-semibold">Asked:</span>
+            <Chip
+              className="text-md font-bold"
+              color="default"
+              variant="flat"
+              size="md"
             >
-              Answer question
-            </Button>
-          )}
-        </span>
-      </CardFooter>
+              {convertToRelativeTime(created_at)}
+            </Chip>
+          </div>
+        </CardHeader>
 
-      {!isQuestionAnswered && editMode && (
-        <>
-          <Divider />
-          <CardFooter className="grid gap-5">
-            {textArea()}
+        <Divider />
 
-            {footerButtons()}
-          </CardFooter>
-        </>
-      )}
+        <CardBody>
+          <p className="text-lg lg:text-xl font-bold">{question}</p>
+        </CardBody>
 
-      {isQuestionAnswered && editMode ? (
-        <>
-          <Divider />
-          <CardFooter className="grid gap-5">
-            {textArea()}
+        <Divider />
 
-            {footerButtons()}
-          </CardFooter>
-        </>
-      ) : (
-        <>
-          {isQuestionAnswered && (
-            <>
+        <CardFooter>
+          <span className="flex flex-row flex-wrap gap-3 items-center text-md lg:text-lg font-semibold">
+            Answered:
+            {isQuestionAnswered ? (
+              <span className="flex flex-row gap-3 items-center">
+                <Chip
+                  className="text-md font-bold text-black"
+                  color="default"
+                  variant="flat"
+                  size="lg"
+                >
+                  {convertToRelativeTime(updated_at)}
+                </Chip>
+                <Button
+                  onClick={onEditQuestionButtonClick}
+                  className="text-md font-bold rounded-full"
+                  variant={editMode ? "solid" : "ghost"}
+                  color="primary"
+                  size="sm"
+                >
+                  Edit answer
+                </Button>
+              </span>
+            ) : (
+              <span className="flex flex-row gap-3 items-center">
+                <Chip
+                  className="text-md font-bold text-black"
+                  color="default"
+                  variant="flat"
+                  size="lg"
+                >
+                  No
+                </Chip>
+                <Button
+                  onClick={onAnswerQuestionButtonClick}
+                  className="text-md font-bold rounded-full"
+                  variant={editMode ? "solid" : "ghost"}
+                  color="secondary"
+                  size="sm"
+                >
+                  Answer question
+                </Button>
+              </span>
+            )}
+          </span>
+        </CardFooter>
+
+        <AnimatePresence mode="wait">
+          {!isQuestionAnswered && editMode && (
+            <motion.span
+              initial={{
+                opacity: 0,
+                scale: 0.75,
+              }}
+              exit={{
+                opacity: 0,
+                scale: 0.75,
+                transition: {
+                  duration: 0.5,
+                },
+              }}
+              animate={{
+                opacity: 1,
+                scale: 1,
+                transition: {
+                  duration: 0.5,
+                },
+              }}
+            >
               <Divider />
+              <CardFooter className="grid gap-5">
+                {textArea()}
 
-              <CardFooter>
-                <p className="text-lg lg:text-xl font-bold">{answer}</p>
+                {footerButtons()}
               </CardFooter>
+            </motion.span>
+          )}
+        </AnimatePresence>
+
+        <AnimatePresence mode="wait">
+          {isQuestionAnswered && editMode ? (
+            <motion.span
+              key={isQuestionAnswered ? "answer" : "edit"}
+              initial={{
+                opacity: 0,
+                scale: 0.75,
+              }}
+              exit={{
+                opacity: 0,
+                scale: 0.75,
+                transition: {
+                  duration: 0.5,
+                },
+              }}
+              animate={{
+                opacity: 1,
+                scale: 1,
+                transition: {
+                  duration: 0.5,
+                },
+              }}
+            >
+              <Divider />
+              <CardFooter className="grid gap-5">
+                {textArea()}
+
+                {footerButtons()}
+              </CardFooter>
+            </motion.span>
+          ) : (
+            <>
+              {isQuestionAnswered && (
+                <motion.span
+                  key={isQuestionAnswered ? "answer" : "edit"}
+                  initial={{
+                    opacity: 0,
+                    scale: 0.75,
+                  }}
+                  exit={{
+                    opacity: 0,
+                    scale: 0.75,
+                    transition: {
+                      duration: 0.5,
+                    },
+                  }}
+                  animate={{
+                    opacity: 1,
+                    scale: 1,
+                    transition: {
+                      duration: 0.5,
+                    },
+                  }}
+                >
+                  <Divider />
+
+                  <CardFooter>
+                    <p className="text-lg lg:text-xl font-bold">{answer}</p>
+                  </CardFooter>
+                </motion.span>
+              )}
             </>
           )}
-        </>
-      )}
-    </Card>
+        </AnimatePresence>
+      </Card>
+    </>
   );
 };
 
