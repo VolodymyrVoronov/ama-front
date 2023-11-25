@@ -60,13 +60,13 @@ const QuestionCardAdmin = ({
     setAnswerData(answer || "");
   };
 
-  const onTextAreaChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const onTextAreaChange = (e: ChangeEvent<HTMLInputElement>): void => {
     const { value } = e.target;
 
     setAnswerData(value);
   };
 
-  useKeyPress(27, () => {
+  useKeyPress(27, (): void => {
     setEditMode(false);
     setAnswerData(answer || "");
   });
