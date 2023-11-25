@@ -71,7 +71,7 @@ const QuestionCardAdmin = ({
     setAnswerData(answer || "");
   });
 
-  const footerButtons = () => (
+  const footerButtons = (): JSX.Element => (
     <ButtonGroup className="w-full">
       <Button
         onClick={onCloseButtonClick}
@@ -91,6 +91,25 @@ const QuestionCardAdmin = ({
         Submit
       </Button>
     </ButtonGroup>
+  );
+
+  const textArea = (): JSX.Element => (
+    <Textarea
+      ref={textAreaRef}
+      className="w-full"
+      placeholder="Enter your answer here..."
+      size="md"
+      isMultiline
+      isRequired
+      name="answer"
+      variant="flat"
+      color="primary"
+      value={answerData}
+      onChange={onTextAreaChange}
+      classNames={{
+        input: "text-lg md:text-xl font-semibold",
+      }}
+    />
   );
 
   return (
@@ -161,22 +180,7 @@ const QuestionCardAdmin = ({
         <>
           <Divider />
           <CardFooter className="grid gap-5">
-            <Textarea
-              ref={textAreaRef}
-              className="w-full"
-              placeholder="Enter your answer here..."
-              size="md"
-              isMultiline
-              isRequired
-              name="answer"
-              variant="flat"
-              color="primary"
-              value={answerData}
-              onChange={onTextAreaChange}
-              classNames={{
-                input: "text-lg md:text-xl font-semibold",
-              }}
-            />
+            {textArea()}
 
             {footerButtons()}
           </CardFooter>
@@ -187,22 +191,7 @@ const QuestionCardAdmin = ({
         <>
           <Divider />
           <CardFooter className="grid gap-5">
-            <Textarea
-              ref={textAreaRef}
-              className="w-full"
-              placeholder="Enter your answer here..."
-              size="md"
-              isMultiline
-              isRequired
-              name="answer"
-              variant="flat"
-              color="primary"
-              value={answerData}
-              onChange={onTextAreaChange}
-              classNames={{
-                input: "text-lg md:text-xl font-semibold",
-              }}
-            />
+            {textArea()}
 
             {footerButtons()}
           </CardFooter>
