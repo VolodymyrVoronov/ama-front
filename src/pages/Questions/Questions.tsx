@@ -3,6 +3,7 @@ import { Input, Progress } from "@nextui-org/react";
 import { AnimatePresence, motion } from "framer-motion";
 import useKeyPress from "ahooks/lib/useKeyPress";
 import useDebounce from "ahooks/lib/useDebounce";
+import useScroll from "ahooks/lib/useScroll";
 
 import { useQuestionsStore } from "../../store/questions";
 
@@ -15,6 +16,7 @@ const Questions = (): JSX.Element => {
     useQuestionsStore();
 
   const inputRef = useRef<HTMLInputElement>(null);
+  const scroll = useScroll();
 
   const [searching, setSearching] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
@@ -53,11 +55,35 @@ const Questions = (): JSX.Element => {
 
   useKeyPress(27, clearInput);
 
+  const showBackToTopButton = scroll && scroll.top > 300;
+
   return (
     <>
       <ScrollProgress />
 
-      <BackToTopButton />
+      <AnimatePresence mode="wait">
+        {showBackToTopButton && (
+          <motion.span
+            initial={{
+              opacity: 0,
+            }}
+            animate={{
+              opacity: 1,
+              transition: {
+                duration: 0.5,
+              },
+            }}
+            exit={{
+              opacity: 0,
+              transition: {
+                duration: 0.5,
+              },
+            }}
+          >
+            <BackToTopButton />
+          </motion.span>
+        )}
+      </AnimatePresence>
 
       <motion.div
         className="max-w-screen-xl m-auto mt-5 px-3 md:px-6"
