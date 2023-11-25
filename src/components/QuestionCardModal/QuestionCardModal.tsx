@@ -57,6 +57,7 @@ const QuestionCardModal = ({
                     wrapper: "w-16 md:w-20",
                   }}
                 />
+
                 <span className="font-semibold text-md md:text-xl lg:text-2xl bg-gradient-to-tr from-cyan-500 to-blue-500 bg-clip-text text-transparent">
                   Ask Me Anything
                 </span>
