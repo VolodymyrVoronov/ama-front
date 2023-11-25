@@ -38,7 +38,9 @@ const NavBar = memo((): JSX.Element => {
     ...(jwtToken ? [{ label: "Admin", link: Path.ADMIN }] : []),
   ];
 
-  const onLoginButtonClick = (): void => {};
+  const onLoginButtonClick = (): void => {
+    navigate(Path.AUTH);
+  };
 
   const onLogoutButtonClick = (): void => {
     logOut();

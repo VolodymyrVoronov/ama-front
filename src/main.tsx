@@ -11,6 +11,7 @@ import App from "./App.tsx";
 import Home from "./pages/Home/Home.tsx";
 import Questions from "./pages/Questions/Questions.tsx";
 import Admin from "./pages/Admin/Admin.tsx";
+import Auth from "./pages/Auth/Auth.tsx";
 
 import "@fontsource-variable/comfortaa";
 
@@ -29,6 +30,10 @@ const router = createBrowserRouter([
       {
         path: Path.QUESTIONS,
         element: <Questions />,
+      },
+      {
+        path: Path.AUTH,
+        element: <Auth />,
       },
       ...(jwtToken ? [{ path: Path.ADMIN, element: <Admin /> }] : []),
     ],
