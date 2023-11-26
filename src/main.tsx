@@ -3,8 +3,6 @@ import ReactDOM from "react-dom/client";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { NextUIProvider } from "@nextui-org/react";
 
-import { useAuthStore } from "./store/auth.ts";
-
 import { Path } from "./constants/index.ts";
 
 import App from "./App.tsx";
@@ -14,8 +12,6 @@ import Admin from "./pages/Admin/Admin.tsx";
 import Auth from "./pages/Auth/Auth.tsx";
 
 import "@fontsource-variable/comfortaa";
-
-const { jwtToken } = useAuthStore.getState();
 
 const router = createBrowserRouter([
   {
@@ -35,7 +31,7 @@ const router = createBrowserRouter([
         path: Path.AUTH,
         element: <Auth />,
       },
-      ...(jwtToken ? [{ path: Path.ADMIN, element: <Admin /> }] : []),
+      { path: Path.ADMIN, element: <Admin /> },
     ],
   },
 ]);

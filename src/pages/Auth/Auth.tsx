@@ -21,7 +21,7 @@ const userDataInitialState = {
 const Auth = (): JSX.Element => {
   const navigate = useNavigate();
 
-  const { jwtToken } = useAuthStore();
+  const { loggingIn, errorLoggingIn, jwtToken, logIn } = useAuthStore();
 
   const [isVisible, setIsVisible] = useState(false);
   const [userData, setUserData] = useState(userDataInitialState);
@@ -42,7 +42,7 @@ const Auth = (): JSX.Element => {
   };
 
   const onSubmitClick = (): void => {
-    console.log(userData);
+    logIn(userData, navigate);
   };
 
   useKeyPress(27, (): void => {
@@ -120,6 +120,7 @@ const Auth = (): JSX.Element => {
                 label: "mb-1",
               }}
             />
+
             <Input
               className="w-full"
               onChange={onInputChange}
@@ -147,11 +148,13 @@ const Auth = (): JSX.Element => {
                 </button>
               }
               type={isVisible ? "text" : "password"}
+              errorMessage={errorLoggingIn}
             />
 
             <div className="flex flex-row gap-5">
               <Button
                 onClick={onBackButtonClick}
+                isLoading={loggingIn}
                 color="danger"
                 variant="shadow"
                 aria-label="Clear"
@@ -163,6 +166,7 @@ const Auth = (): JSX.Element => {
               <Button
                 onClick={onSubmitClick}
                 isDisabled={areFieldsEmpty()}
+                isLoading={loggingIn}
                 color="primary"
                 variant="shadow"
                 aria-label="Submit"
