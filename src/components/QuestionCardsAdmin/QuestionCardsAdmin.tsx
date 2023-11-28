@@ -2,13 +2,13 @@ import { useRef } from "react";
 import { Divider } from "@nextui-org/react";
 import { motion, useInView } from "framer-motion";
 
-import { IQuestionResponse } from "../../types";
+import { TQuestion } from "../../types";
 
 import QuestionCardAdmin from "../QuestionCardAdmin/QuestionCardAdmin";
 
 interface IQuestionCardsAdminProps {
   date: string;
-  questions: IQuestionResponse[];
+  questions: TQuestion[];
 }
 
 const QuestionCardsAdmin = ({

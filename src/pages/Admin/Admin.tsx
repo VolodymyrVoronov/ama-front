@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 
 import { useAuthStore } from "../../store/auth";
 import { useQuestionsStore } from "../../store/questions";
-import { IQuestionResponse } from "../../types";
+import { TQuestion } from "../../types";
 import { extractSortedDates } from "../../helpers/extractSortedDates";
 import { Path } from "../../constants";
 
@@ -19,7 +19,7 @@ const Admin = (): JSX.Element => {
   const sortedDate = extractSortedDates(questions, "created_at");
 
   const questionGroupedByDate = sortedDate.reduce(
-    (acc: { date: string; questions: IQuestionResponse[] }[], date) => {
+    (acc: { date: string; questions: TQuestion[] }[], date) => {
       const questionsForDate = questions.filter((q) => q.created_at === date);
 
       acc.push({ date, questions: questionsForDate });

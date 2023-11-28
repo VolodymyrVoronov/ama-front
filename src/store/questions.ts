@@ -1,26 +1,26 @@
 import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
 
-import { IQuestionRequest, IQuestionResponse } from "../types";
+import { TQuestionNew, TQuestion } from "../types";
 
 import { extractWords } from "../helpers/extractWords";
 import { sortAlphabetically } from "../helpers/sortAlphabetically";
 
 interface IQuestionsStore {
-  questions: IQuestionResponse[];
-  questionsFilteredByKeyWord: IQuestionResponse[];
-  questionsFilteredByAuthorEmail: IQuestionResponse[];
+  questions: TQuestion[];
+  questionsFilteredByKeyWord: TQuestion[];
+  questionsFilteredByAuthorEmail: TQuestion[];
   wordsCloud: string[];
   keyWord: string;
 }
 
 interface IQuestionsStoreActions {
-  setQuestions: (questions: IQuestionResponse[]) => void;
+  setQuestions: (questions: TQuestion[]) => void;
   setWordsCloud: () => void;
   setKeyWord: (keyWord: string) => void;
   filterQuestionsByKeyWord: (keyWord: string) => void;
   filterQuestionsByAuthorEmail: (authorEmail: string) => void;
-  sendQuestion: (questionData: IQuestionRequest) => void;
+  sendQuestion: (questionData: TQuestionNew) => void;
 }
 
 export const useQuestionsStore = create(

@@ -14,13 +14,13 @@ import { motion, AnimatePresence } from "framer-motion";
 import useKeyPress from "ahooks/lib/useKeyPress";
 import useScroll from "ahooks/lib/useScroll";
 
-import { IQuestionResponse } from "../../types";
+import { TQuestion } from "../../types";
 import { convertToRelativeTime } from "../../helpers/convertToRelativeTime";
 
 import BackToTopButton from "../BackToTopButton/BackToTopButton";
 
 interface IQuestionCardAdminProps {
-  questionData: IQuestionResponse;
+  questionData: TQuestion;
 }
 
 const QuestionCardAdmin = ({

@@ -9,13 +9,13 @@ import {
 } from "@nextui-org/react";
 import Highlighter from "react-highlight-words";
 
-import { IQuestionResponse } from "../../types";
+import { TQuestion } from "../../types";
 import { useQuestionsStore } from "../../store/questions";
 
 import { convertToRelativeTime } from "../../helpers/convertToRelativeTime";
 
 interface IQuestionCardProps {
-  questionData: IQuestionResponse;
+  questionData: TQuestion;
 
   onCardClickHandler: (id: string) => void;
 }

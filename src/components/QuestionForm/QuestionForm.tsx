@@ -4,7 +4,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import useKeyPress from "ahooks/lib/useKeyPress";
 import cn from "classnames";
 
-import { INewQuestion } from "../../types";
+import { TQuestionForm } from "../../types";
 
 const initialState = {
   question: "",
@@ -15,7 +15,7 @@ const QuestionForm = (): JSX.Element => {
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
 
   const [showCover, setShowCover] = useState(false);
-  const [questionData, setQuestionData] = useState<INewQuestion>(initialState);
+  const [questionData, setQuestionData] = useState<TQuestionForm>(initialState);
   const [changeZIndex, setChangeZIndex] = useState(false);
 
   const onAreaFocus = (): void => {

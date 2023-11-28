@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 
 import { useQuestionsStore } from "../../store/questions";
 import { sortByDate } from "../../helpers/sortByDate";
-import { IQuestionResponse } from "../../types";
+import { TQuestion } from "../../types";
 
 import QuestionCard from "../QuestionCard/QuestionCard";
 import QuestionCardModal from "../QuestionCardModal/QuestionCardModal";
@@ -12,7 +12,7 @@ import QuestionCardModal from "../QuestionCardModal/QuestionCardModal";
 const QuestionCards = memo((): JSX.Element => {
   const { questionsFilteredByKeyWord } = useQuestionsStore();
 
-  const [question, setQuestion] = useState<IQuestionResponse>();
+  const [question, setQuestion] = useState<TQuestion>();
   const [toggleModal, setToggleModal] = useState(false);
   const [questionCount, setQuestionCount] = useState(6);
 
@@ -24,7 +24,7 @@ const QuestionCards = memo((): JSX.Element => {
     );
   };
 
-  const sortedByDateQuestions = sortByDate<IQuestionResponse>(
+  const sortedByDateQuestions = sortByDate<TQuestion>(
     questionsFilteredByKeyWord,
     "created_at"
   ).slice(0, questionCount);

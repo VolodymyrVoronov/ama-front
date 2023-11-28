@@ -6,13 +6,13 @@ import {
   CardFooter,
 } from "@nextui-org/react";
 
-import { IQuestionResponse } from "../../types";
+import { TQuestion } from "../../types";
 
 import { convertToRelativeTime } from "../../helpers/convertToRelativeTime";
 import { memo } from "react";
 
 interface IQuestionCardDetailedCardProps {
-  questionData: IQuestionResponse;
+  questionData: TQuestion;
 }
 
 const QuestionCardDetailed = memo(

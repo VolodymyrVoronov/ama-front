@@ -11,13 +11,13 @@ import {
   Image,
 } from "@nextui-org/react";
 
-import { IQuestionResponse } from "../../types";
+import { TQuestion } from "../../types";
 
 import { convertToRelativeTime } from "../../helpers/convertToRelativeTime";
 import { useEffect } from "react";
 
 interface IQuestionCardModalProps {
-  questionData?: IQuestionResponse;
+  questionData?: TQuestion;
   toggleModal: boolean;
 }
 

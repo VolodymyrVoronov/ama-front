@@ -6,10 +6,10 @@ import { immer } from "zustand/middleware/immer";
 import { authService } from "../services/api/auth";
 
 import { Path } from "../constants";
-import { IAdminData } from "../types";
+import { TAdminData } from "../types";
 
 interface IAuthStore {
-  admin: IAdminData | null;
+  admin: TAdminData | null;
   jwtToken: string;
 
   loggingIn: boolean;
@@ -20,7 +20,7 @@ interface IAuthStore {
 }
 
 interface IAuthStoreActions {
-  logIn: (user: IAdminData, navigate: NavigateFunction) => void;
+  logIn: (user: TAdminData, navigate: NavigateFunction) => void;
   logOut: () => void;
   setJwtToken: (jwtToken: string) => void;
   refreshToken: () => void;
