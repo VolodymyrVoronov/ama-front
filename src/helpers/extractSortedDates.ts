@@ -5,7 +5,9 @@
  * @param {keyof T} dateField - The field name in the objects representing the date values.
  * @return {string[]} An array of unique, sorted dates extracted from the given array of objects.
  */
-export const extractSortedDates = <T extends { [K in keyof T]: string }>(
+export const extractSortedDates = <
+  T extends { [K in keyof T]: string | number }
+>(
   array: T[],
   dateField: keyof T
 ): string[] => {
@@ -20,7 +22,7 @@ export const extractSortedDates = <T extends { [K in keyof T]: string }>(
     return dateB.getTime() - dateA.getTime();
   });
 
-  const dates = sortedDates.map((a) => a[dateField]);
+  const dates = sortedDates.map((a) => String(a[dateField]));
 
   return Array.from(new Set(dates));
 };

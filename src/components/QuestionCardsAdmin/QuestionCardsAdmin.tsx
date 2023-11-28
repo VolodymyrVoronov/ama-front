@@ -20,6 +20,8 @@ const QuestionCardsAdmin = ({
     margin: "0px 0px -100px 0px",
   });
 
+  const editedDate = date.split("T")[0];
+
   return (
     <motion.div
       ref={questionContainerRef}
@@ -40,7 +42,7 @@ const QuestionCardsAdmin = ({
           }
           transition={{ duration: 0.5, type: "spring", bounce: 0.5 }}
         >
-          {date}
+          {editedDate}
         </motion.span>
 
         <Divider className="mt-2 mb-4 h-1 bg-white rounded-full" />

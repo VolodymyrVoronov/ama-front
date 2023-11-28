@@ -11,7 +11,7 @@ import { Path } from "../../constants";
 import QuestionCardsAdmin from "../../components/QuestionCardsAdmin/QuestionCardsAdmin";
 
 const Admin = (): JSX.Element => {
-  const { jwtToken, refreshingToken } = useAuthStore();
+  const { jwtToken } = useAuthStore();
   const { questions } = useQuestionsStore();
 
   const navigate = useNavigate();
@@ -30,9 +30,15 @@ const Admin = (): JSX.Element => {
   );
 
   useEffect(() => {
-    if (!jwtToken && refreshingToken) {
-      navigate(Path.HOME);
-    }
+    const timeoutId = setTimeout(() => {
+      if (!jwtToken) {
+        navigate(Path.AUTH);
+      }
+    }, 100);
+
+    return () => {
+      clearTimeout(timeoutId);
+    };
   }, [jwtToken]);
 
   return (

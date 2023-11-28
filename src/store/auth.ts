@@ -50,7 +50,7 @@ export const useAuthStore = create(
           });
 
           set({ loggingIn: false });
-          navigate(Path.QUESTIONS);
+          navigate(Path.ADMIN);
         }
       } catch (error) {
         if (error instanceof AxiosError) {

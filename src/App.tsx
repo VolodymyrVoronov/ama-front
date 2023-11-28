@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { motion } from "framer-motion";
 import { Outlet, useLocation } from "react-router-dom";
 import { Progress, Chip } from "@nextui-org/react";
 import useInterval from "ahooks/lib/useInterval";
@@ -52,7 +53,21 @@ const App = (): JSX.Element => {
       ) : null}
 
       {loadingQuestions ? (
-        <Progress size="sm" isIndeterminate aria-label="Loading..." />
+        <motion.div
+          className="flex flex-col items-center"
+          initial={{
+            opacity: 0,
+          }}
+          animate={{
+            opacity: 1,
+            transition: {
+              duration: 0.5,
+              delay: 1.5,
+            },
+          }}
+        >
+          <Progress size="sm" isIndeterminate aria-label="Loading..." />
+        </motion.div>
       ) : (
         <Outlet />
       )}

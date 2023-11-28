@@ -1,4 +1,4 @@
-import React from "react";
+import React, { lazy } from "react";
 import ReactDOM from "react-dom/client";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { NextUIProvider } from "@nextui-org/react";
@@ -8,8 +8,10 @@ import { Path } from "./constants/index.ts";
 import App from "./App.tsx";
 import Home from "./pages/Home/Home.tsx";
 import Questions from "./pages/Questions/Questions.tsx";
-import Admin from "./pages/Admin/Admin.tsx";
-import Auth from "./pages/Auth/Auth.tsx";
+import SuspenseWrapper from "./components/SuspenseWrapper/SuspenseWrapper.tsx";
+
+const Auth = lazy(() => import("./pages/Auth/Auth.tsx"));
+const Admin = lazy(() => import("./pages/Admin/Admin.tsx"));
 
 import "@fontsource-variable/comfortaa";
 
@@ -29,9 +31,12 @@ const router = createBrowserRouter([
       },
       {
         path: Path.AUTH,
-        element: <Auth />,
+        element: SuspenseWrapper(<Auth />),
       },
-      { path: Path.ADMIN, element: <Admin /> },
+      {
+        path: Path.ADMIN,
+        element: SuspenseWrapper(<Admin />),
+      },
     ],
   },
 ]);
