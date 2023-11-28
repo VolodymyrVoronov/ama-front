@@ -47,9 +47,9 @@ export const useQuestionsStore = create(
         const res = await questionsService.fetchAllQuestions();
 
         if (res.status === 200) {
-          const q = res.data;
+          const questions = res.data;
 
-          set({ questions: q });
+          set({ questions });
           set({ loadingQuestions: false });
 
           get().setWordsCloud();
