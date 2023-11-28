@@ -59,7 +59,7 @@ const Questions = (): JSX.Element => {
 
   return (
     <>
-      <ScrollProgress />
+      {questionsFilteredByAuthorEmail.length > 10 && <ScrollProgress />}
 
       <AnimatePresence mode="wait">
         {showBackToTopButton && (

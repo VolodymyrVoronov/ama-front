@@ -27,7 +27,7 @@ const QuestionCardModal = ({
 }: IQuestionCardModalProps): JSX.Element => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
-  const { question, authorEmail, answer, created_at, updated_at } =
+  const { question, author_email, answer, created_at, updated_at } =
     questionData ?? {};
 
   const isQuestionAnswered = answer !== "";
@@ -68,7 +68,7 @@ const QuestionCardModal = ({
 
             <ModalHeader className="flex flex-col gap-4 items-start">
               <span className="text-lg md:text-xl lg:text-2xl font-bold text-left break-all">
-                {authorEmail}
+                {author_email}
               </span>
 
               <div className="flex flex-row gap-3">

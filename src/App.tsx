@@ -1,5 +1,7 @@
-import { useCallback, useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Outlet, useLocation } from "react-router-dom";
+import { Progress, Chip } from "@nextui-org/react";
+import useInterval from "ahooks/lib/useInterval";
 
 import { useAuthStore } from "./store/auth";
 import { useQuestionsStore } from "./store/questions";
@@ -7,42 +9,27 @@ import { Path } from "./constants";
 
 import NavBar from "./components/NavBar/NavBar";
 
-import { mockQuestions } from "./mock/questions";
-
 const App = (): JSX.Element => {
-  const { jwtToken, refreshingToken, refreshToken } = useAuthStore();
-  const { setQuestions, setWordsCloud } = useQuestionsStore();
+  const { jwtToken, errorRefreshingToken, refreshToken } = useAuthStore();
+  const { loadingQuestions, errorLoadingQuestions, setQuestions } =
+    useQuestionsStore();
 
   const location = useLocation();
 
-  const [tickInterval, setTickInterval] = useState<NodeJS.Timeout>();
-
-  const toggleRefresh = useCallback(
-    (status: boolean) => {
-      if (status) {
-        const intervalId = setInterval(() => {
-          refreshToken();
-        }, 1000 * 60 * 10);
-
-        setTickInterval(intervalId);
-      } else {
-        setTickInterval(undefined);
-        clearInterval(tickInterval);
-      }
-    },
-    [tickInterval]
-  );
-
-  useEffect(() => {
-    if (!jwtToken && !refreshingToken) {
+  useInterval(() => {
+    if (jwtToken) {
       refreshToken();
-      toggleRefresh(true);
     }
-  }, [jwtToken, toggleRefresh]);
+  }, 1000 * 60 * 10);
 
   useEffect(() => {
-    setQuestions(mockQuestions);
-    setWordsCloud();
+    if (!jwtToken) {
+      refreshToken();
+    }
+  }, [jwtToken]);
+
+  useEffect(() => {
+    setQuestions();
   }, []);
 
   if (location.pathname === Path.AUTH) {
@@ -52,8 +39,23 @@ const App = (): JSX.Element => {
   return (
     <div>
       <NavBar />
+      {errorLoadingQuestions ? (
+        <div className="flex justify-center mt-5">
+          <Chip color="danger">{errorLoadingQuestions}</Chip>
+        </div>
+      ) : null}
 
-      <Outlet />
+      {errorRefreshingToken ? (
+        <div className="flex justify-center mt-5">
+          <Chip color="danger">{errorRefreshingToken}</Chip>
+        </div>
+      ) : null}
+
+      {loadingQuestions ? (
+        <Progress size="sm" isIndeterminate aria-label="Loading..." />
+      ) : (
+        <Outlet />
+      )}
     </div>
   );
 };

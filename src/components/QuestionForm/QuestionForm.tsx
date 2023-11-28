@@ -8,7 +8,7 @@ import { TQuestionForm } from "../../types";
 
 const initialState = {
   question: "",
-  authorEmail: "",
+  author_email: "",
 };
 
 const QuestionForm = (): JSX.Element => {
@@ -91,7 +91,7 @@ const QuestionForm = (): JSX.Element => {
   useKeyPress(27, onCloseClick);
 
   const fieldsEmpty =
-    questionData?.question === "" || questionData?.authorEmail === "";
+    questionData?.question === "" || questionData?.author_email === "";
 
   return (
     <>
@@ -175,9 +175,9 @@ const QuestionForm = (): JSX.Element => {
                   placeholder="Enter your email here..."
                   size="lg"
                   isRequired
-                  name="authorEmail"
+                  name="author_email"
                   type="email"
-                  value={questionData.authorEmail}
+                  value={questionData.author_email}
                   onChange={onInputChange}
                   classNames={{
                     input: "text-xl md:text-2xl font-semibold",

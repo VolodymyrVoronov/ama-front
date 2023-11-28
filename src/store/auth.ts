@@ -59,6 +59,9 @@ export const useAuthStore = create(
         } else if (error instanceof Error) {
           set({ errorLoggingIn: error.message });
           set({ loggingIn: false });
+        } else {
+          set({ errorLoggingIn: "Unknown error" });
+          set({ loggingIn: false });
         }
       } finally {
         set({ loggingIn: false });
@@ -77,6 +80,8 @@ export const useAuthStore = create(
           console.log(error.response?.data.message);
         } else if (error instanceof Error) {
           console.log(error.message);
+        } else {
+          console.log("Unknown error");
         }
       }
     },
@@ -102,6 +107,7 @@ export const useAuthStore = create(
           set({ errorRefreshingToken: error.message });
           set({ refreshingToken: false });
         } else {
+          set({ errorRefreshingToken: "Unknown error" });
           set({ refreshingToken: false });
         }
       } finally {

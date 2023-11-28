@@ -1,7 +1,7 @@
 export type TQuestion = {
-  id: string;
+  id: number;
   question: string;
-  authorEmail: string;
+  author_email: string;
   answer: string;
   created_at: string;
   updated_at: string;

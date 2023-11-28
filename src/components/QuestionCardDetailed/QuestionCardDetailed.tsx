@@ -17,7 +17,7 @@ interface IQuestionCardDetailedCardProps {
 
 const QuestionCardDetailed = memo(
   ({ questionData }: IQuestionCardDetailedCardProps): JSX.Element => {
-    const { question, authorEmail, answer, created_at, updated_at } =
+    const { question, author_email, answer, created_at, updated_at } =
       questionData;
 
     const isQuestionAnswered = answer !== "";
@@ -26,7 +26,7 @@ const QuestionCardDetailed = memo(
       <Card className="grid content-start w-full h-auto shadow-lg">
         <CardHeader className="flex flex-col gap-3 items-start">
           <p className="text-lg lg:text-xl font-bold text-left break-all">
-            {authorEmail}
+            {author_email}
           </p>
           <div className="flex flex-row gap-3">
             <span className="text-md lg:text-lg font-semibold">Asked:</span>

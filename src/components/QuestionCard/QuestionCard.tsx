@@ -26,7 +26,7 @@ const QuestionCard = ({
 }: IQuestionCardProps): JSX.Element => {
   const { keyWord } = useQuestionsStore();
 
-  const { id, question, authorEmail, answer, created_at, updated_at } =
+  const { id, question, author_email, answer, created_at, updated_at } =
     questionData;
 
   const onCardClick = (): void => {
@@ -53,7 +53,7 @@ const QuestionCard = ({
       >
         <CardHeader className="flex flex-col gap-3 items-start">
           <p className="text-lg lg:text-xl font-bold text-left break-all">
-            {authorEmail}
+            {author_email}
           </p>
           <div className="flex flex-row gap-3">
             <span className="text-md lg:text-lg font-semibold">Asked:</span>

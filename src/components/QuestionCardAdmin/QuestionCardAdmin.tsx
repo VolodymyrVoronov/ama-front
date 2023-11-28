@@ -26,7 +26,7 @@ interface IQuestionCardAdminProps {
 const QuestionCardAdmin = ({
   questionData,
 }: IQuestionCardAdminProps): JSX.Element => {
-  const { id, question, authorEmail, answer, created_at, updated_at } =
+  const { id, question, author_email, answer, created_at, updated_at } =
     questionData;
 
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
@@ -126,7 +126,7 @@ const QuestionCardAdmin = ({
       <Card className="grid content-start min-w-[200px] max-w-full shadow-lg">
         <CardHeader className="flex flex-col gap-3 items-start">
           <p className="text-lg lg:text-xl font-bold text-left break-all">
-            {authorEmail}
+            {author_email}
           </p>
           <div className="flex flex-row gap-3">
             <span className="text-md lg:text-lg font-semibold">Asked:</span>

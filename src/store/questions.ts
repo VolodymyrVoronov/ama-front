@@ -1,8 +1,10 @@
+import { AxiosError } from "axios";
 import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
 
 import { TQuestionNew, TQuestion } from "../types";
 
+import { questionsService } from "../services/api/questions";
 import { extractWords } from "../helpers/extractWords";
 import { sortAlphabetically } from "../helpers/sortAlphabetically";
 
@@ -12,15 +14,19 @@ interface IQuestionsStore {
   questionsFilteredByAuthorEmail: TQuestion[];
   wordsCloud: string[];
   keyWord: string;
+
+  loadingQuestions: boolean;
+  errorLoadingQuestions: string;
 }
 
 interface IQuestionsStoreActions {
-  setQuestions: (questions: TQuestion[]) => void;
+  setQuestions: () => void;
   setWordsCloud: () => void;
   setKeyWord: (keyWord: string) => void;
   filterQuestionsByKeyWord: (keyWord: string) => void;
   filterQuestionsByAuthorEmail: (authorEmail: string) => void;
   sendQuestion: (questionData: TQuestionNew) => void;
+  refetchQuestions: () => void;
 }
 
 export const useQuestionsStore = create(
@@ -31,8 +37,37 @@ export const useQuestionsStore = create(
     wordsCloud: [],
     keyWord: "",
 
-    setQuestions: (questions) => {
-      set({ questions: questions });
+    loadingQuestions: false,
+    errorLoadingQuestions: "",
+
+    setQuestions: async (): Promise<void> => {
+      set({ loadingQuestions: true });
+
+      try {
+        const res = await questionsService.fetchAllQuestions();
+
+        if (res.status === 200) {
+          const q = res.data;
+
+          set({ questions: q });
+          set({ loadingQuestions: false });
+
+          get().setWordsCloud();
+        }
+      } catch (error) {
+        if (error instanceof AxiosError) {
+          set({ errorLoadingQuestions: error.response?.data.message });
+          set({ loadingQuestions: false });
+        } else if (error instanceof Error) {
+          set({ errorLoadingQuestions: error.message });
+          set({ loadingQuestions: false });
+        } else {
+          set({ errorLoadingQuestions: "Unknown error" });
+          set({ loadingQuestions: false });
+        }
+      } finally {
+        set({ loadingQuestions: false });
+      }
     },
 
     setKeyWord: (keyWord) => {
@@ -67,7 +102,7 @@ export const useQuestionsStore = create(
       } else {
         set({
           questionsFilteredByAuthorEmail: questions.filter((q) =>
-            q.authorEmail.includes(authorEmail)
+            q.author_email.includes(authorEmail)
           ),
         });
       }
@@ -80,5 +115,9 @@ export const useQuestionsStore = create(
     },
 
     sendQuestion: (questionData) => {},
+
+    refetchQuestions: () => {
+      get().setQuestions();
+    },
   }))
 );
