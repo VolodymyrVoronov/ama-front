@@ -1,4 +1,8 @@
+import { AxiosResponse } from "axios";
+
 import client from "./axios-client";
+
+import { TAuthResponse } from "../../types";
 
 const authUrl = {
   login: "/authenticate",
@@ -6,21 +10,20 @@ const authUrl = {
   refresh: "/refresh",
 } as const;
 
+const withCredentials = true;
+
 const login = (data: {
   email: string;
   password: string;
-}): Promise<{
-  status: number;
-  data: {
-    access_token: string;
-    refresh_token: string;
-  };
-}> => client.post(authUrl.login, data, { withCredentials: true });
-const logout = (): Promise<any> =>
-  client.get(authUrl.logout, { withCredentials: true });
-const refresh = (): Promise<any> =>
+}): Promise<AxiosResponse<TAuthResponse>> =>
+  client.post(authUrl.login, data, { withCredentials });
+
+const logout = (): Promise<AxiosResponse<any>> =>
+  client.get(authUrl.logout, { withCredentials });
+
+const refresh = (): Promise<AxiosResponse<TAuthResponse>> =>
   client.get(authUrl.refresh, {
-    withCredentials: true,
+    withCredentials,
   });
 
 export const authService = {

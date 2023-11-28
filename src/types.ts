@@ -18,3 +18,8 @@ export type TAdminData = {
   email: string;
   password: string;
 };
+
+export type TAuthResponse = {
+  access_token: string;
+  refresh_token: string;
+};

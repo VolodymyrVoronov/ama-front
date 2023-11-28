@@ -53,12 +53,10 @@ export const useAuthStore = create(
           navigate(Path.QUESTIONS);
         }
       } catch (error) {
-        if (error instanceof Error) {
-          if (error instanceof AxiosError) {
-            set({ errorLoggingIn: error.response?.data.message });
-            set({ loggingIn: false });
-          }
-
+        if (error instanceof AxiosError) {
+          set({ errorLoggingIn: error.response?.data.message });
+          set({ loggingIn: false });
+        } else if (error instanceof Error) {
           set({ errorLoggingIn: error.message });
           set({ loggingIn: false });
         }
@@ -75,10 +73,10 @@ export const useAuthStore = create(
           set({ admin: null, jwtToken: "" });
         }
       } catch (error) {
-        if (error instanceof Error) {
-          if (error instanceof AxiosError) {
-            console.log(error.response?.data.message);
-          }
+        if (error instanceof AxiosError) {
+          console.log(error.response?.data.message);
+        } else if (error instanceof Error) {
+          console.log(error.message);
         }
       }
     },
@@ -97,12 +95,10 @@ export const useAuthStore = create(
           set({ refreshingToken: false });
         }
       } catch (error) {
-        if (error instanceof Error) {
-          if (error instanceof AxiosError) {
-            set({ errorRefreshingToken: error.response?.data.message });
-            set({ refreshingToken: false });
-          }
-
+        if (error instanceof AxiosError) {
+          set({ errorRefreshingToken: error.response?.data.message });
+          set({ refreshingToken: false });
+        } else if (error instanceof Error) {
           set({ errorRefreshingToken: error.message });
           set({ refreshingToken: false });
         } else {
