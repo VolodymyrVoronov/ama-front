@@ -42,7 +42,7 @@ const Auth = (): JSX.Element => {
   };
 
   const onSubmitClick = (): void => {
-    logIn(userData, navigate);
+    void logIn(userData, navigate);
   };
 
   useKeyPress(27, (): void => {

@@ -77,4 +77,6 @@ const QuestionCards = memo((): JSX.Element => {
   );
 });
 
+QuestionCards.displayName = "QuestionCards";
+
 export default QuestionCards;

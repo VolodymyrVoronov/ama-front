@@ -20,14 +20,14 @@ interface IAuthStore {
 }
 
 interface IAuthStoreActions {
-  logIn: (user: TAdminData, navigate: NavigateFunction) => void;
-  logOut: () => void;
+  logIn: (user: TAdminData, navigate: NavigateFunction) => Promise<void>;
+  logOut: () => Promise<void>;
   setJwtToken: (jwtToken: string) => void;
-  refreshToken: () => void;
+  refreshToken: () => Promise<void>;
 }
 
 export const useAuthStore = create(
-  immer<IAuthStore & IAuthStoreActions>((set, get) => ({
+  immer<IAuthStore & IAuthStoreActions>((set) => ({
     admin: null,
     jwtToken: "",
 
@@ -54,8 +54,13 @@ export const useAuthStore = create(
         }
       } catch (error) {
         if (error instanceof AxiosError) {
-          set({ errorLoggingIn: error.response?.data.message });
-          set({ loggingIn: false });
+          if (error.response?.data instanceof Error) {
+            set({ errorLoggingIn: error.response?.data.message });
+            set({ loggingIn: false });
+          } else {
+            set({ errorLoggingIn: "Unknown error" });
+            set({ loggingIn: false });
+          }
         } else if (error instanceof Error) {
           set({ errorLoggingIn: error.message });
           set({ loggingIn: false });
@@ -77,7 +82,9 @@ export const useAuthStore = create(
         }
       } catch (error) {
         if (error instanceof AxiosError) {
-          console.log(error.response?.data.message);
+          if (error.response?.data instanceof Error) {
+            console.log(error.response?.data.message);
+          }
         } else if (error instanceof Error) {
           console.log(error.message);
         } else {
@@ -101,8 +108,13 @@ export const useAuthStore = create(
         }
       } catch (error) {
         if (error instanceof AxiosError) {
-          set({ errorRefreshingToken: error.response?.data.message });
-          set({ refreshingToken: false });
+          if (error.response?.data instanceof Error) {
+            set({ errorRefreshingToken: error.response?.data.message });
+            set({ refreshingToken: false });
+          } else {
+            set({ errorRefreshingToken: "Unknown error" });
+            set({ refreshingToken: false });
+          }
         } else if (error instanceof Error) {
           set({ errorRefreshingToken: error.message });
           set({ refreshingToken: false });

@@ -79,7 +79,7 @@ const QuestionCardModal = ({
                   variant="flat"
                   size="md"
                 >
-                  {convertToRelativeTime(created_at as string)}
+                  {convertToRelativeTime(created_at!)}
                 </Chip>
               </div>
             </ModalHeader>
@@ -113,7 +113,7 @@ const QuestionCardModal = ({
                       variant="flat"
                       size="sm"
                     >
-                      {convertToRelativeTime(updated_at as string)}
+                      {convertToRelativeTime(updated_at!)}
                     </Chip>
                   </span>
                 ) : (

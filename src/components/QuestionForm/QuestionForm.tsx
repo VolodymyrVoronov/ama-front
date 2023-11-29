@@ -42,7 +42,7 @@ const QuestionForm = (): JSX.Element => {
   };
 
   const onSubmitClick = (): void => {
-    sendQuestion(questionData);
+    void sendQuestion(questionData);
 
     if (!sendingQuestion && !errorSendingQuestion) {
       setShowCover(false);
@@ -74,19 +74,21 @@ const QuestionForm = (): JSX.Element => {
     };
   }, [showCover]);
 
-  useEffect(() => {
-    window.addEventListener("scroll", () => {
-      if (textAreaRef.current) {
-        if (textAreaRef.current.getBoundingClientRect().top < 100) {
-          setChangeZIndex(true);
-        } else {
-          setChangeZIndex(false);
-        }
+  const checkTextAreaPositions = (): void => {
+    if (textAreaRef.current) {
+      if (textAreaRef.current.getBoundingClientRect().top < 100) {
+        setChangeZIndex(true);
+      } else {
+        setChangeZIndex(false);
       }
-    });
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("scroll", checkTextAreaPositions);
 
     return () => {
-      window.removeEventListener("scroll", () => {});
+      window.removeEventListener("scroll", checkTextAreaPositions);
     };
   }, []);
 

@@ -57,7 +57,7 @@ const QuestionCardAdmin = ({
   const onSubmitButtonClick = (): void => {
     setEditMode(false);
 
-    console.log(answerData);
+    console.log(answerData, id);
   };
 
   const onCloseButtonClick = (): void => {

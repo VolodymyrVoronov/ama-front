@@ -23,13 +23,13 @@ interface IQuestionsStore {
 }
 
 interface IQuestionsStoreActions {
-  setQuestions: () => void;
+  setQuestions: () => Promise<void>;
   setWordsCloud: () => void;
   setKeyWord: (keyWord: string) => void;
   filterQuestionsByKeyWord: (keyWord: string) => void;
   filterQuestionsByAuthorEmail: (authorEmail: string) => void;
-  sendQuestion: (questionData: TQuestionNew) => void;
-  refetchQuestions: () => void;
+  sendQuestion: (questionData: TQuestionNew) => Promise<void>;
+  refetchQuestions: () => Promise<void>;
 }
 
 export const useQuestionsStore = create(
@@ -62,8 +62,15 @@ export const useQuestionsStore = create(
         }
       } catch (error) {
         if (error instanceof AxiosError) {
-          set({ errorLoadingQuestions: error.response?.data.message });
-          set({ loadingQuestions: false });
+          if (error.response?.data instanceof Error) {
+            set({
+              errorSendingQuestion: error.response?.data.message,
+            });
+            set({ sendingQuestion: false });
+          } else {
+            set({ errorSendingQuestion: "Unknown error" });
+            set({ sendingQuestion: false });
+          }
         } else if (error instanceof Error) {
           set({ errorLoadingQuestions: error.message });
           set({ loadingQuestions: false });
@@ -129,13 +136,21 @@ export const useQuestionsStore = create(
         const res = await questionsService.sendQuestion(questionData);
 
         if (res.status === 202) {
-          get().refetchQuestions();
+          await get().refetchQuestions();
+
           set({ sendingQuestion: false });
         }
       } catch (error) {
         if (error instanceof AxiosError) {
-          set({ errorSendingQuestion: error.response?.data.message });
-          set({ sendingQuestion: false });
+          if (error.response?.data instanceof Error) {
+            set({
+              errorSendingQuestion: error.response?.data.message,
+            });
+            set({ sendingQuestion: false });
+          } else {
+            set({ errorSendingQuestion: "Unknown error" });
+            set({ sendingQuestion: false });
+          }
         } else if (error instanceof Error) {
           set({ errorSendingQuestion: error.message });
           set({ sendingQuestion: false });
@@ -146,8 +161,8 @@ export const useQuestionsStore = create(
       }
     },
 
-    refetchQuestions: () => {
-      get().setQuestions();
+    refetchQuestions: async (): Promise<void> => {
+      await get().setQuestions();
     },
   }))
 );

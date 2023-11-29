@@ -1,11 +1,11 @@
-export type TQuestion = {
+export interface TQuestion {
   id: number;
   question: string;
   author_email: string;
   answer: string;
   created_at: string;
   updated_at: string;
-};
+}
 
 export type TQuestionForm = Omit<
   TQuestion,
@@ -17,12 +17,12 @@ export type TQuestionNew = Omit<
   "id" | "answer" | "created_at" | "updated_at"
 >;
 
-export type TAdminData = {
+export interface TAdminData {
   email: string;
   password: string;
-};
+}
 
-export type TAuthResponse = {
+export interface TAuthResponse {
   access_token: string;
   refresh_token: string;
-};
+}

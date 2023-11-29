@@ -43,7 +43,7 @@ const NavBar = memo((): JSX.Element => {
   };
 
   const onLogoutButtonClick = (): void => {
-    logOut();
+    void logOut();
     navigate(Path.HOME);
   };
 
@@ -135,5 +135,7 @@ const NavBar = memo((): JSX.Element => {
     </Navbar>
   );
 });
+
+NavBar.displayName = "NavBar";
 
 export default NavBar;

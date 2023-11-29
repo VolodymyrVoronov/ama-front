@@ -19,18 +19,18 @@ const App = (): JSX.Element => {
 
   useInterval(() => {
     if (jwtToken) {
-      refreshToken();
+      void refreshToken();
     }
   }, 1000 * 60 * 10);
 
   useEffect(() => {
     if (!jwtToken) {
-      refreshToken();
+      void refreshToken();
     }
   }, [jwtToken]);
 
   useEffect(() => {
-    setQuestions();
+    void setQuestions();
   }, []);
 
   if (location.pathname === Path.AUTH) {

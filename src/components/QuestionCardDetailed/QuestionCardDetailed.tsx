@@ -90,4 +90,6 @@ const QuestionCardDetailed = memo(
   }
 );
 
+QuestionCardDetailed.displayName = "QuestionCardDetailed";
+
 export default QuestionCardDetailed;

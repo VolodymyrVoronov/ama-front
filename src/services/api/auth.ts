@@ -18,7 +18,7 @@ const login = (data: {
 }): Promise<AxiosResponse<TAuthResponse>> =>
   client.post(authUrl.login, data, { withCredentials });
 
-const logout = (): Promise<AxiosResponse<any>> =>
+const logout = (): Promise<AxiosResponse<AxiosResponse>> =>
   client.get(authUrl.logout, { withCredentials });
 
 const refresh = (): Promise<AxiosResponse<TAuthResponse>> =>

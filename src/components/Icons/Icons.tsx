@@ -1,6 +1,6 @@
 import { SVGProps } from "react";
 
-interface IIconsProps extends SVGProps<SVGSVGElement> {}
+type IIconsProps = SVGProps<SVGSVGElement>;
 
 const EyeFilledIcon = ({ ...props }: IIconsProps) => (
   <svg
