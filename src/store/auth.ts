@@ -1,4 +1,4 @@
-import { AxiosError } from "axios";
+import { isAxiosError } from "axios";
 import { NavigateFunction } from "react-router-dom";
 import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
@@ -6,7 +6,7 @@ import { immer } from "zustand/middleware/immer";
 import { authService } from "../services/api/auth";
 
 import { Path } from "../constants";
-import { TAdminData } from "../types";
+import { IAxiosError, TAdminData } from "../types";
 
 interface IAuthStore {
   admin: TAdminData | null;
@@ -53,14 +53,9 @@ export const useAuthStore = create(
           navigate(Path.ADMIN);
         }
       } catch (error) {
-        if (error instanceof AxiosError) {
-          if (error.response?.data instanceof Error) {
-            set({ errorLoggingIn: error.response?.data.message });
-            set({ loggingIn: false });
-          } else {
-            set({ errorLoggingIn: "Unknown error" });
-            set({ loggingIn: false });
-          }
+        if (isAxiosError<IAxiosError>(error)) {
+          set({ errorLoggingIn: error.response?.data.message });
+          set({ loggingIn: false });
         } else if (error instanceof Error) {
           set({ errorLoggingIn: error.message });
           set({ loggingIn: false });
@@ -81,10 +76,8 @@ export const useAuthStore = create(
           set({ admin: null, jwtToken: "" });
         }
       } catch (error) {
-        if (error instanceof AxiosError) {
-          if (error.response?.data instanceof Error) {
-            console.log(error.response?.data.message);
-          }
+        if (isAxiosError<IAxiosError>(error)) {
+          console.log(error.response?.data.message);
         } else if (error instanceof Error) {
           console.log(error.message);
         } else {
@@ -107,14 +100,9 @@ export const useAuthStore = create(
           set({ refreshingToken: false });
         }
       } catch (error) {
-        if (error instanceof AxiosError) {
-          if (error.response?.data instanceof Error) {
-            set({ errorRefreshingToken: error.response?.data.message });
-            set({ refreshingToken: false });
-          } else {
-            set({ errorRefreshingToken: "Unknown error" });
-            set({ refreshingToken: false });
-          }
+        if (isAxiosError<IAxiosError>(error)) {
+          set({ errorRefreshingToken: error.response?.data.message });
+          set({ refreshingToken: false });
         } else if (error instanceof Error) {
           set({ errorRefreshingToken: error.message });
           set({ refreshingToken: false });

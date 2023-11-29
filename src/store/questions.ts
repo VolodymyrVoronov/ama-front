@@ -1,8 +1,8 @@
-import { AxiosError } from "axios";
+import { isAxiosError } from "axios";
 import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
 
-import { TQuestionNew, TQuestion } from "../types";
+import { TQuestionNew, TQuestion, IAxiosError } from "../types";
 
 import { questionsService } from "../services/api/questions";
 import { extractWords } from "../helpers/extractWords";
@@ -61,16 +61,11 @@ export const useQuestionsStore = create(
           get().setWordsCloud();
         }
       } catch (error) {
-        if (error instanceof AxiosError) {
-          if (error.response?.data instanceof Error) {
-            set({
-              errorSendingQuestion: error.response?.data.message,
-            });
-            set({ sendingQuestion: false });
-          } else {
-            set({ errorSendingQuestion: "Unknown error" });
-            set({ sendingQuestion: false });
-          }
+        if (isAxiosError<IAxiosError>(error)) {
+          set({
+            errorSendingQuestion: error.response?.data.message,
+          });
+          set({ sendingQuestion: false });
         } else if (error instanceof Error) {
           set({ errorLoadingQuestions: error.message });
           set({ loadingQuestions: false });
@@ -141,16 +136,11 @@ export const useQuestionsStore = create(
           set({ sendingQuestion: false });
         }
       } catch (error) {
-        if (error instanceof AxiosError) {
-          if (error.response?.data instanceof Error) {
-            set({
-              errorSendingQuestion: error.response?.data.message,
-            });
-            set({ sendingQuestion: false });
-          } else {
-            set({ errorSendingQuestion: "Unknown error" });
-            set({ sendingQuestion: false });
-          }
+        if (isAxiosError<IAxiosError>(error)) {
+          set({
+            errorSendingQuestion: error.response?.data.message,
+          });
+          set({ sendingQuestion: false });
         } else if (error instanceof Error) {
           set({ errorSendingQuestion: error.message });
           set({ sendingQuestion: false });

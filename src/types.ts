@@ -26,3 +26,8 @@ export interface TAuthResponse {
   access_token: string;
   refresh_token: string;
 }
+
+export interface IAxiosError {
+  error: boolean;
+  message: string;
+}
