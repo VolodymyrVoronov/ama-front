@@ -12,7 +12,10 @@ export type TQuestionForm = Omit<
   "id" | "answer" | "created_at" | "updated_at"
 >;
 
-export type TQuestionNew = Omit<TQuestion, "id" | "created_at" | "updated_at">;
+export type TQuestionNew = Omit<
+  TQuestion,
+  "id" | "answer" | "created_at" | "updated_at"
+>;
 
 export type TAdminData = {
   email: string;

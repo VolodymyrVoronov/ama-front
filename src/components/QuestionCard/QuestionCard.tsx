@@ -17,7 +17,7 @@ import { convertToRelativeTime } from "../../helpers/convertToRelativeTime";
 interface IQuestionCardProps {
   questionData: TQuestion;
 
-  onCardClickHandler: (id: string) => void;
+  onCardClickHandler: (id: number) => void;
 }
 
 const QuestionCard = ({

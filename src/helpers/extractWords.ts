@@ -90,7 +90,7 @@ export const extractWords = <T extends { question: string }>(
   }
 
   const keywords = tempText
-    .replace(/\p{P}/gu, " ")
+    .replace(/[\p{P}\p{S}\n]+/gu, " ")
     .split(" ")
     .filter((word) => !exceptions.includes(word) && word !== "");
 

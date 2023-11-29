@@ -5,7 +5,7 @@
  * @param {keyof T} dateField - The date field to sort the objects by.
  * @return {T[]} The sorted array of objects.
  */
-export const sortByDate = <T extends { [K in keyof T]: string }>(
+export const sortByDate = <T extends { [K in keyof T]: string | number }>(
   array: T[],
   dateField: keyof T
 ): T[] => {

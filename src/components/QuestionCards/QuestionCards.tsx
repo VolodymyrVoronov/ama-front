@@ -16,7 +16,7 @@ const QuestionCards = memo((): JSX.Element => {
   const [toggleModal, setToggleModal] = useState(false);
   const [questionCount, setQuestionCount] = useState(6);
 
-  const onCardClickHandler = (id: string): void => {
+  const onCardClickHandler = (id: number): void => {
     setToggleModal((prev) => !prev);
 
     setQuestion(

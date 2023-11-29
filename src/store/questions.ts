@@ -17,6 +17,9 @@ interface IQuestionsStore {
 
   loadingQuestions: boolean;
   errorLoadingQuestions: string;
+
+  sendingQuestion: boolean;
+  errorSendingQuestion: string;
 }
 
 interface IQuestionsStoreActions {
@@ -39,6 +42,9 @@ export const useQuestionsStore = create(
 
     loadingQuestions: false,
     errorLoadingQuestions: "",
+
+    sendingQuestion: false,
+    errorSendingQuestion: "",
 
     setQuestions: async (): Promise<void> => {
       set({ loadingQuestions: true });
@@ -82,7 +88,9 @@ export const useQuestionsStore = create(
       } else {
         set({
           questionsFilteredByKeyWord: questions.filter((q) => {
-            const tempQuestions = q.question.toLowerCase().split(/[ !?]+/);
+            const tempQuestions = q.question
+              .toLowerCase()
+              .split(/[ !?.,:;\n]+/);
 
             for (const element of tempQuestions) {
               if (element === keyWord) {
@@ -114,7 +122,29 @@ export const useQuestionsStore = create(
       set({ wordsCloud: words });
     },
 
-    sendQuestion: (questionData) => {},
+    sendQuestion: async (questionData): Promise<void> => {
+      set({ sendingQuestion: true });
+
+      try {
+        const res = await questionsService.sendQuestion(questionData);
+
+        if (res.status === 202) {
+          get().refetchQuestions();
+          set({ sendingQuestion: false });
+        }
+      } catch (error) {
+        if (error instanceof AxiosError) {
+          set({ errorSendingQuestion: error.response?.data.message });
+          set({ sendingQuestion: false });
+        } else if (error instanceof Error) {
+          set({ errorSendingQuestion: error.message });
+          set({ sendingQuestion: false });
+        } else {
+          set({ errorSendingQuestion: "Unknown error" });
+          set({ sendingQuestion: false });
+        }
+      }
+    },
 
     refetchQuestions: () => {
       get().setQuestions();

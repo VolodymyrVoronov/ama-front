@@ -1,8 +1,10 @@
 import { ChangeEvent, useEffect, useRef, useState } from "react";
-import { Button, Tooltip, Textarea, Input } from "@nextui-org/react";
+import { Button, Tooltip, Textarea, Input, Chip } from "@nextui-org/react";
 import { AnimatePresence, motion } from "framer-motion";
 import useKeyPress from "ahooks/lib/useKeyPress";
 import cn from "classnames";
+
+import { useQuestionsStore } from "../../store/questions";
 
 import { TQuestionForm } from "../../types";
 
@@ -13,6 +15,9 @@ const initialState = {
 
 const QuestionForm = (): JSX.Element => {
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
+
+  const { sendingQuestion, errorSendingQuestion, sendQuestion } =
+    useQuestionsStore();
 
   const [showCover, setShowCover] = useState(false);
   const [questionData, setQuestionData] = useState<TQuestionForm>(initialState);
@@ -37,9 +42,12 @@ const QuestionForm = (): JSX.Element => {
   };
 
   const onSubmitClick = (): void => {
-    console.log(questionData);
+    sendQuestion(questionData);
 
-    setQuestionData(initialState);
+    if (!sendingQuestion && !errorSendingQuestion) {
+      setShowCover(false);
+      setQuestionData(initialState);
+    }
   };
 
   const onCloseClick = (): void => {
@@ -185,6 +193,11 @@ const QuestionForm = (): JSX.Element => {
                 />
               </motion.div>
 
+              {errorSendingQuestion ? (
+                <Chip className="z-40 mt-3 md:mt-5" color="danger">
+                  {errorSendingQuestion}
+                </Chip>
+              ) : null}
               <motion.div
                 className="w-full md:w-10/12 lg:w-8/12 xl:w-6/12 flex justify-center gap-3 sm:gap-5 z-50 mt-3 md:mt-5 px-3 py-3 bg-default-100 rounded-xl shadow-lg"
                 initial={{
@@ -219,6 +232,7 @@ const QuestionForm = (): JSX.Element => {
                   }}
                 >
                   <Button
+                    isLoading={sendingQuestion}
                     color="primary"
                     variant="bordered"
                     aria-label="Close"
@@ -239,6 +253,7 @@ const QuestionForm = (): JSX.Element => {
                   }}
                 >
                   <Button
+                    isLoading={sendingQuestion}
                     color="danger"
                     variant="shadow"
                     aria-label="Clear"
@@ -260,6 +275,7 @@ const QuestionForm = (): JSX.Element => {
                   }}
                 >
                   <Button
+                    isLoading={sendingQuestion}
                     color="primary"
                     variant="shadow"
                     aria-label="Submit"
