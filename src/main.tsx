@@ -7,9 +7,9 @@ import { Path } from "./constants/index.ts";
 
 import App from "./App.tsx";
 import Home from "./pages/Home/Home.tsx";
-import Questions from "./pages/Questions/Questions.tsx";
 import SuspenseWrapper from "./components/SuspenseWrapper/SuspenseWrapper.tsx";
 
+const Questions = lazy(() => import("./pages/Questions/Questions.tsx"));
 const Auth = lazy(() => import("./pages/Auth/Auth.tsx"));
 const Admin = lazy(() => import("./pages/Admin/Admin.tsx"));
 
@@ -27,15 +27,27 @@ const router = createBrowserRouter([
       },
       {
         path: Path.QUESTIONS,
-        element: <Questions />,
+        element: (
+          <SuspenseWrapper>
+            <Questions />
+          </SuspenseWrapper>
+        ),
       },
       {
         path: Path.AUTH,
-        element: SuspenseWrapper(<Auth />),
+        element: (
+          <SuspenseWrapper>
+            <Auth />
+          </SuspenseWrapper>
+        ),
       },
       {
         path: Path.ADMIN,
-        element: SuspenseWrapper(<Admin />),
+        element: (
+          <SuspenseWrapper>
+            <Admin />
+          </SuspenseWrapper>
+        ),
       },
     ],
   },

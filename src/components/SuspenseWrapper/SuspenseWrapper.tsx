@@ -1,8 +1,12 @@
+import { ReactNode, Suspense } from "react";
 import { Progress } from "@nextui-org/react";
 import { motion } from "framer-motion";
-import { Suspense } from "react";
 
-const SuspenseWrapper = (child: JSX.Element): JSX.Element => (
+interface ISuspenseWrapperProps {
+  children: ReactNode;
+}
+
+const SuspenseWrapper = ({ children }: ISuspenseWrapperProps): JSX.Element => (
   <Suspense
     fallback={
       <motion.div
@@ -23,7 +27,7 @@ const SuspenseWrapper = (child: JSX.Element): JSX.Element => (
       </motion.div>
     }
   >
-    {child}
+    {children}
   </Suspense>
 );
 
