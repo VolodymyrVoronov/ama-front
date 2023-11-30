@@ -37,8 +37,11 @@ const QuestionCardAdmin = ({
     errorAnsweringQuestion,
     editingQuestion,
     errorEditingQuestion,
+    deletingQuestion,
+    errorDeletingQuestion,
     answerQuestion,
     editQuestion,
+    deleteQuestion,
   } = useQuestionsStore();
 
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
@@ -90,6 +93,10 @@ const QuestionCardAdmin = ({
   const onCloseButtonClick = (): void => {
     setEditMode(false);
     setAnswerData(answer || "");
+  };
+
+  const onDeleteButtonClick = (): void => {
+    void deleteQuestion(id, jwtToken);
   };
 
   const onTextAreaChange = (e: ChangeEvent<HTMLInputElement>): void => {
@@ -155,10 +162,14 @@ const QuestionCardAdmin = ({
 
       <Card className="grid content-start min-w-[200px] max-w-full shadow-lg">
         <CardHeader className="flex flex-col gap-3 items-start">
-          {errorAnsweringQuestion || errorEditingQuestion ? (
+          {errorAnsweringQuestion ||
+          errorEditingQuestion ||
+          errorDeletingQuestion ? (
             <p className="text-lg lg:text-xl font-bold text-left break-all">
               <Chip as={"span"} color="danger">
-                {errorAnsweringQuestion || errorEditingQuestion}
+                {errorAnsweringQuestion ||
+                  errorEditingQuestion ||
+                  errorDeletingQuestion}
               </Chip>
             </p>
           ) : null}
@@ -230,6 +241,16 @@ const QuestionCardAdmin = ({
                 </Button>
               </span>
             )}
+            <Button
+              onClick={onDeleteButtonClick}
+              isLoading={deletingQuestion}
+              color="danger"
+              variant="shadow"
+              className="text-md font-bold rounded-full"
+              size="sm"
+            >
+              Delete
+            </Button>
           </span>
         </CardFooter>
 
