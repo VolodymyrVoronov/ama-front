@@ -14,6 +14,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import useKeyPress from "ahooks/lib/useKeyPress";
 import useScroll from "ahooks/lib/useScroll";
 
+import { useAuthStore } from "./../../store/auth";
+import { useQuestionsStore } from "../../store/questions";
 import { TQuestion } from "../../types";
 import { convertToRelativeTime } from "../../helpers/convertToRelativeTime";
 
@@ -28,6 +30,16 @@ const QuestionCardAdmin = ({
 }: IQuestionCardAdminProps): JSX.Element => {
   const { id, question, author_email, answer, created_at, updated_at } =
     questionData;
+
+  const { jwtToken } = useAuthStore();
+  const {
+    answeringQuestion,
+    errorAnsweringQuestion,
+    editingQuestion,
+    errorEditingQuestion,
+    answerQuestion,
+    editQuestion,
+  } = useQuestionsStore();
 
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
   const scroll = useScroll();
@@ -55,9 +67,24 @@ const QuestionCardAdmin = ({
   };
 
   const onSubmitButtonClick = (): void => {
-    setEditMode(false);
+    const newQuestionData = {
+      ...questionData,
+      answer: answerData,
+    };
 
-    console.log(answerData, id);
+    if (answerData.length === 0) {
+      void editQuestion(id, newQuestionData, jwtToken);
+
+      if (!editingQuestion) {
+        setEditMode(false);
+      }
+    } else {
+      void answerQuestion(id, newQuestionData, jwtToken);
+
+      if (!answeringQuestion) {
+        setEditMode(false);
+      }
+    }
   };
 
   const onCloseButtonClick = (): void => {
@@ -80,6 +107,7 @@ const QuestionCardAdmin = ({
     <ButtonGroup className="w-full">
       <Button
         onClick={onCloseButtonClick}
+        isLoading={answeringQuestion || editingQuestion}
         className="w-full"
         variant="shadow"
         color="danger"
@@ -88,6 +116,7 @@ const QuestionCardAdmin = ({
       </Button>
       <Button
         onClick={onSubmitButtonClick}
+        isLoading={answeringQuestion || editingQuestion}
         className="w-full"
         variant="shadow"
         color="primary"
@@ -111,6 +140,7 @@ const QuestionCardAdmin = ({
       color="primary"
       value={answerData}
       onChange={onTextAreaChange}
+      isDisabled={answeringQuestion || editingQuestion}
       classNames={{
         input: "text-lg md:text-xl font-semibold",
       }}
@@ -125,6 +155,13 @@ const QuestionCardAdmin = ({
 
       <Card className="grid content-start min-w-[200px] max-w-full shadow-lg">
         <CardHeader className="flex flex-col gap-3 items-start">
+          {errorAnsweringQuestion || errorEditingQuestion ? (
+            <p className="text-lg lg:text-xl font-bold text-left break-all">
+              <Chip as={"span"} color="danger">
+                {errorAnsweringQuestion || errorEditingQuestion}
+              </Chip>
+            </p>
+          ) : null}
           <p className="text-lg lg:text-xl font-bold text-left break-all">
             {author_email}
           </p>

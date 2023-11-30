@@ -20,6 +20,15 @@ interface IQuestionsStore {
 
   sendingQuestion: boolean;
   errorSendingQuestion: string;
+
+  answeringQuestion: boolean;
+  errorAnsweringQuestion: string;
+
+  editingQuestion: boolean;
+  errorEditingQuestion: string;
+
+  deletingQuestion: boolean;
+  errorDeletingQuestion: string;
 }
 
 interface IQuestionsStoreActions {
@@ -30,6 +39,17 @@ interface IQuestionsStoreActions {
   filterQuestionsByAuthorEmail: (authorEmail: string) => void;
   sendQuestion: (questionData: TQuestionNew) => Promise<void>;
   refetchQuestions: () => Promise<void>;
+  answerQuestion: (
+    questionId: number,
+    answerData: TQuestion,
+    jwt: string
+  ) => Promise<void>;
+  editQuestion: (
+    questionId: number,
+    questionData: TQuestion,
+    jwt: string
+  ) => Promise<void>;
+  deleteQuestion: (questionId: number, jwt: string) => Promise<void>;
 }
 
 export const useQuestionsStore = create(
@@ -45,6 +65,15 @@ export const useQuestionsStore = create(
 
     sendingQuestion: false,
     errorSendingQuestion: "",
+
+    answeringQuestion: false,
+    errorAnsweringQuestion: "",
+
+    editingQuestion: false,
+    errorEditingQuestion: "",
+
+    deletingQuestion: false,
+    errorDeletingQuestion: "",
 
     setQuestions: async (): Promise<void> => {
       set({ loadingQuestions: true });
@@ -148,11 +177,113 @@ export const useQuestionsStore = create(
           set({ errorSendingQuestion: "Unknown error" });
           set({ sendingQuestion: false });
         }
+      } finally {
+        set({ sendingQuestion: false });
       }
     },
 
     refetchQuestions: async (): Promise<void> => {
       await get().setQuestions();
+    },
+
+    answerQuestion: async (
+      questionId: number,
+      answerData: TQuestion,
+      jwt: string
+    ): Promise<void> => {
+      set({ answeringQuestion: true });
+
+      try {
+        const res = await questionsService.updateQuestion(
+          questionId,
+          answerData,
+          jwt
+        );
+
+        if (res.status === 202) {
+          await get().refetchQuestions();
+          set({ answeringQuestion: false });
+        }
+      } catch (error) {
+        if (isAxiosError<IAxiosError>(error)) {
+          set({
+            errorAnsweringQuestion: error.response?.data.message,
+          });
+          set({ answeringQuestion: false });
+        } else if (error instanceof Error) {
+          set({ errorAnsweringQuestion: error.message });
+          set({ answeringQuestion: false });
+        } else {
+          set({ errorAnsweringQuestion: "Unknown error" });
+          set({ answeringQuestion: false });
+        }
+      }
+    },
+
+    editQuestion: async (
+      questionId: number,
+      answerData: TQuestion,
+      jwt: string
+    ): Promise<void> => {
+      set({ editingQuestion: true });
+
+      try {
+        const res = await questionsService.updateQuestion(
+          questionId,
+          answerData,
+          jwt
+        );
+
+        if (res.status === 202) {
+          set({ editingQuestion: false });
+
+          await get().refetchQuestions();
+        }
+      } catch (error) {
+        if (isAxiosError<IAxiosError>(error)) {
+          set({
+            errorEditingQuestion: error.response?.data.message,
+          });
+          set({ editingQuestion: false });
+        } else if (error instanceof Error) {
+          set({ errorEditingQuestion: error.message });
+          set({ editingQuestion: false });
+        } else {
+          set({ errorEditingQuestion: "Unknown error" });
+          set({ editingQuestion: false });
+        }
+      } finally {
+        set({ editingQuestion: false });
+      }
+    },
+
+    deleteQuestion: async (questionId: number, jwt: string): Promise<void> => {
+      set({ deletingQuestion: true });
+
+      try {
+        const res = await questionsService.deleteQuestion(questionId, jwt);
+
+        if (res.status === 202) {
+          set({ deletingQuestion: false });
+
+          await get().refetchQuestions();
+        }
+      } catch (error) {
+        if (isAxiosError<IAxiosError>(error)) {
+          set({
+            errorDeletingQuestion: error.response?.data.message,
+          });
+          set({ deletingQuestion: false });
+        } else if (error instanceof Error) {
+          set({ errorDeletingQuestion: error.message });
+          set({ deletingQuestion: false });
+        } else {
+          set({ errorDeletingQuestion: "Unknown error" });
+          set({ deletingQuestion: false });
+        }
+      } finally {
+        set({ deletingQuestion: false });
+      }
     },
   }))
 );

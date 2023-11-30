@@ -13,8 +13,11 @@ import BackToTopButton from "../../components/BackToTopButton/BackToTopButton";
 import NoQuestions from "../../components/NoQuestions/NoQuestions";
 
 const Questions = (): JSX.Element => {
-  const { questionsFilteredByAuthorEmail, filterQuestionsByAuthorEmail } =
-    useQuestionsStore();
+  const {
+    questions,
+    questionsFilteredByAuthorEmail,
+    filterQuestionsByAuthorEmail,
+  } = useQuestionsStore();
 
   const inputRef = useRef<HTMLInputElement>(null);
   const scroll = useScroll();
@@ -62,7 +65,7 @@ const Questions = (): JSX.Element => {
     <>
       {questionsFilteredByAuthorEmail.length > 10 && <ScrollProgress />}
 
-      {questionsFilteredByAuthorEmail.length === 0 ? (
+      {questions.length === 0 ? (
         <NoQuestions />
       ) : (
         <>
