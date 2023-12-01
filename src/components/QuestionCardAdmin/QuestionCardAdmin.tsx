@@ -9,6 +9,9 @@ import {
   Button,
   Textarea,
   ButtonGroup,
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
 } from "@nextui-org/react";
 import { motion, AnimatePresence } from "framer-motion";
 import useKeyPress from "ahooks/lib/useKeyPress";
@@ -241,16 +244,34 @@ const QuestionCardAdmin = ({
                 </Button>
               </span>
             )}
-            <Button
-              onClick={onDeleteButtonClick}
-              isLoading={deletingQuestion}
-              color="danger"
-              variant="shadow"
-              className="text-md font-bold rounded-full"
-              size="sm"
-            >
-              Delete
-            </Button>
+            <Popover showArrow backdrop="opaque" placement="bottom">
+              <PopoverTrigger>
+                <Button
+                  isLoading={deletingQuestion}
+                  color="danger"
+                  variant="light"
+                  className="text-md font-bold rounded-full"
+                  size="sm"
+                >
+                  Delete
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="flex px-5 py-2.5">
+                <span className="text-md font-bold">
+                  Are you sure you want to delete this question?
+                </span>
+                <Button
+                  onClick={onDeleteButtonClick}
+                  isLoading={deletingQuestion}
+                  color="danger"
+                  variant="shadow"
+                  className="text-md font-bold rounded-full mt-5"
+                  size="sm"
+                >
+                  Yes
+                </Button>
+              </PopoverContent>
+            </Popover>
           </span>
         </CardFooter>
 
