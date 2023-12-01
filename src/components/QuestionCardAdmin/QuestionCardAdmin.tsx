@@ -176,9 +176,11 @@ const QuestionCardAdmin = ({
               </Chip>
             </p>
           ) : null}
+
           <p className="text-lg lg:text-xl font-bold text-left break-all">
             {author_email}
           </p>
+
           <div className="flex flex-row gap-3">
             <span className="text-md lg:text-lg font-semibold">Asked:</span>
             <Chip

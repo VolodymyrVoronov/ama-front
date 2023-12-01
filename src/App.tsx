@@ -68,9 +68,9 @@ const App = (): JSX.Element => {
         >
           <Progress size="sm" isIndeterminate aria-label="Loading..." />
         </motion.div>
-      ) : (
-        <Outlet />
-      )}
+      ) : null}
+
+      <Outlet />
     </div>
   );
 };

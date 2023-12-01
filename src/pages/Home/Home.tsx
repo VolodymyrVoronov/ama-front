@@ -21,7 +21,7 @@ const Home = (): JSX.Element => {
     window.scroll({ top: 0, behavior: "smooth", left: 0 });
   };
 
-  const { questions } = useQuestionsStore();
+  const { questions, loadingQuestions } = useQuestionsStore();
 
   return (
     <motion.div
@@ -38,37 +38,41 @@ const Home = (): JSX.Element => {
     >
       <QuestionForm />
 
-      {questions.length === 0 ? (
-        <NoQuestions />
-      ) : (
+      {loadingQuestions ? null : (
         <>
-          <div className="max-w-screen-xl container grid grid-cols-12 gap-5 mt-5">
-            <div className="tile col-span-12 md:col-span-8 order-2 md:order-1 p-2 sm:p-4 bg-gradient-to-tr from-cyan-500 to-blue-500 shadow-lg rounded-xl">
-              {sectionTitle("Latest Questions")}
+          {questions.length === 0 ? (
+            <NoQuestions />
+          ) : (
+            <>
+              <div className="max-w-screen-xl container grid grid-cols-12 gap-5 mt-5">
+                <div className="tile col-span-12 md:col-span-8 order-2 md:order-1 p-2 sm:p-4 bg-gradient-to-tr from-cyan-500 to-blue-500 shadow-lg rounded-xl">
+                  {sectionTitle("Latest Questions")}
 
-              <Divider className="my-3 bg-default-100 h-0.5 md:h-1 rounded" />
+                  <Divider className="my-3 bg-default-100 h-0.5 md:h-1 rounded" />
 
-              <QuestionCards />
-            </div>
+                  <QuestionCards />
+                </div>
 
-            <div className="tile col-span-12 md:col-span-4 p-2 order-1 md:order-2 sm:p-4 self-start bg-gradient-to-tr from-cyan-500 to-blue-500 shadow-lg rounded-xl md:sticky md:top-24">
-              {sectionTitle("Words Cloud")}
+                <div className="tile col-span-12 md:col-span-4 p-2 order-1 md:order-2 sm:p-4 self-start bg-gradient-to-tr from-cyan-500 to-blue-500 shadow-lg rounded-xl md:sticky md:top-24">
+                  {sectionTitle("Words Cloud")}
 
-              <Divider className="my-3 bg-default-100 h-0.5 md:h-1 rounded" />
+                  <Divider className="my-3 bg-default-100 h-0.5 md:h-1 rounded" />
 
-              <WordsCloud />
-            </div>
-          </div>
+                  <WordsCloud />
+                </div>
+              </div>
 
-          <Button
-            onClick={onScrollToTopButtonClick}
-            className="w-full md:hidden mt-5 bg-gradient-to-tr from-cyan-500 to-blue-500"
-            color="primary"
-            variant="shadow"
-            size="lg"
-          >
-            To top
-          </Button>
+              <Button
+                onClick={onScrollToTopButtonClick}
+                className="w-full md:hidden mt-5 bg-gradient-to-tr from-cyan-500 to-blue-500"
+                color="primary"
+                variant="shadow"
+                size="lg"
+              >
+                To top
+              </Button>
+            </>
+          )}
         </>
       )}
     </motion.div>

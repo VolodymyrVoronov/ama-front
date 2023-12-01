@@ -16,8 +16,12 @@ const initialState = {
 const QuestionForm = (): JSX.Element => {
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
 
-  const { sendingQuestion, errorSendingQuestion, sendQuestion } =
-    useQuestionsStore();
+  const {
+    loadingQuestions,
+    sendingQuestion,
+    errorSendingQuestion,
+    sendQuestion,
+  } = useQuestionsStore();
 
   const [showCover, setShowCover] = useState(false);
   const [questionData, setQuestionData] = useState<TQuestionForm>(initialState);
@@ -152,6 +156,7 @@ const QuestionForm = (): JSX.Element => {
           classNames={{
             input: "text-xl md:text-2xl font-semibold",
           }}
+          isDisabled={loadingQuestions || sendingQuestion}
         />
 
         <AnimatePresence mode="wait">
