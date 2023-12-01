@@ -3,6 +3,7 @@ import { Divider } from "@nextui-org/react";
 import { motion, useInView } from "framer-motion";
 
 import { TQuestion } from "../../types";
+import { useQuestionsStore } from "../../store/questions";
 
 import QuestionCardAdmin from "../QuestionCardAdmin/QuestionCardAdmin";
 
@@ -19,6 +20,8 @@ const QuestionCardsAdmin = ({
   const isQuestionContainerInView = useInView(questionContainerRef, {
     margin: "0px 0px -100px 0px",
   });
+
+  const { loadingQuestions } = useQuestionsStore();
 
   const formattedDate = date.split("T")[0];
 
@@ -47,11 +50,24 @@ const QuestionCardsAdmin = ({
 
         <Divider className="mt-2 mb-4 h-1 bg-white rounded-full" />
 
-        <div className="max-w-screen-xl container grid grid-cols-1 lg:grid-cols-2 gap-4">
+        <motion.div
+          className="max-w-screen-xl container grid grid-cols-1 lg:grid-cols-2 gap-4"
+          initial={{
+            filter: "blur(0px)",
+            pointerEvents: "auto",
+          }}
+          animate={{
+            filter: loadingQuestions ? "blur(5px)" : "none",
+            pointerEvents: loadingQuestions ? "none" : "auto",
+            transition: {
+              duration: 0.5,
+            },
+          }}
+        >
           {questions.map((question) => (
             <QuestionCardAdmin key={question.id} questionData={question} />
           ))}
-        </div>
+        </motion.div>
       </div>
     </motion.div>
   );

@@ -154,7 +154,7 @@ const Auth = (): JSX.Element => {
             <div className="flex flex-row gap-5">
               <Button
                 onClick={onBackButtonClick}
-                isLoading={loggingIn}
+                isDisabled={loggingIn}
                 color="danger"
                 variant="shadow"
                 aria-label="Clear"
