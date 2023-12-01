@@ -1,4 +1,4 @@
-# AMA
+# AMA-front
 
 To install und run the project:
 
